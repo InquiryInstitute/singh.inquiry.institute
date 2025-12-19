@@ -5,125 +5,212 @@ This guide provides step-by-step instructions for configuring AWS Route 53 to po
 ## Prerequisites
 
 - AWS account with Route 53 access
-- Domain name registered (or transferred to Route 53)
+- Domain `inquiry.institute` registered (or access to manage DNS for it)
 - GitHub Pages site deployed and accessible
+- Repository: `InquiryInstitute/singh.inquiry.institute`
 
-## Step 1: Get GitHub Pages IP Addresses
+## Step 1: Determine Your Setup
 
-GitHub Pages uses the following IP addresses:
-- `185.199.108.153`
-- `185.199.109.153`
-- `185.199.110.153`
-- `185.199.111.153`
+Since `singh.inquiry.institute` is a **subdomain**, we have two options:
 
-Alternatively, you can use GitHub's CNAME record:
-- `inquiryinstitute.github.io` (for user/organization pages)
-- Or the specific repository subdomain if using project pages
+### Option A: Use Existing `inquiry.institute` Hosted Zone (Recommended)
+If you already have a Route 53 hosted zone for `inquiry.institute`, simply add a CNAME record for the `singh` subdomain.
 
-## Step 2: Create Hosted Zone in Route 53
+### Option B: Create New Hosted Zone for Subdomain
+If you need a separate hosted zone (not recommended for subdomains), create one for `singh.inquiry.institute`.
 
-1. Log in to AWS Console and navigate to Route 53
+**We'll use Option A** - adding a record to the existing `inquiry.institute` hosted zone.
+
+## Step 2: Get GitHub Pages URL
+
+For project pages under the `InquiryInstitute` organization, the GitHub Pages URL is:
+- **Project Pages**: `inquiryinstitute.github.io/singh.inquiry.institute` (if using project pages)
+- **Custom Domain**: `singh.inquiry.institute` (once configured)
+
+For CNAME record, we'll use: **`inquiryinstitute.github.io`** (organization GitHub Pages URL)
+
+**Note**: If the repository uses project pages, the actual URL might be different. Check your GitHub Pages settings.
+
+## Step 3: Access Route 53 Hosted Zone
+
+1. Log in to AWS Console: https://console.aws.amazon.com/route53/
 2. Click "Hosted zones" in the left sidebar
-3. Click "Create hosted zone"
-4. Enter your domain name: `singh.inquiry.institute` (or `inquiry.institute` if managing the parent domain)
-5. Choose "Public hosted zone"
-6. Click "Create hosted zone"
+3. Find and click on the hosted zone for **`inquiry.institute`**
+   - If it doesn't exist, see "Alternative: Create New Hosted Zone" below
 
-## Step 3: Configure DNS Records
+## Step 4: Create CNAME Record for singh Subdomain
 
-### Option A: Using A Records (for apex domain)
-
-If you want `singh.inquiry.institute` to point directly to GitHub Pages:
-
-1. In your hosted zone, click "Create record"
+1. In the `inquiry.institute` hosted zone, click **"Create record"**
 2. Configure the record:
-   - **Record name**: Leave blank (for apex) or enter subdomain
-   - **Record type**: `A`
-   - **Value**: Enter one of the GitHub Pages IP addresses
-   - **TTL**: `300` (5 minutes)
-3. Create 3 additional A records with the same configuration but different IP addresses (one for each of the 4 IPs)
+   - **Record name**: `singh` (this creates `singh.inquiry.institute`)
+   - **Record type**: `CNAME - Routes traffic to another domain name and some AWS resources`
+   - **Value**: `inquiryinstitute.github.io`
+   - **TTL**: `300` (5 minutes) or use default
+   - **Routing policy**: Simple routing
+3. Click **"Create records"**
 
-### Option B: Using CNAME (Recommended for subdomains)
+**Important**: The record name should be just `singh` (not `singh.inquiry.institute`), as Route 53 automatically appends the domain name from the hosted zone.
 
-If you want `singh.inquiry.institute` as a subdomain:
+### Alternative: If Using Project Pages
 
-1. In your hosted zone, click "Create record"
-2. Configure the record:
-   - **Record name**: `singh` (or leave blank for apex)
-   - **Record type**: `CNAME`
-   - **Value**: `inquiryinstitute.github.io` (or your GitHub Pages URL)
-   - **TTL**: `300` (5 minutes)
-3. Click "Create records"
+If your GitHub Pages uses project pages format, the CNAME value should be:
+- `inquiryinstitute.github.io` (for organization pages)
+- Or check your actual GitHub Pages URL in repository Settings → Pages
 
-**Note**: CNAME records cannot be used for apex domains (e.g., `inquiry.institute`). For apex domains, use A records or ALIAS records.
+## Alternative: Create New Hosted Zone (Not Recommended)
 
-### Option C: Using ALIAS Record (Best for apex domains)
+If you don't have a hosted zone for `inquiry.institute` and need to create one:
 
-If managing the apex domain `inquiry.institute`:
+1. In Route 53, click "Create hosted zone"
+2. Enter domain name: `inquiry.institute`
+3. Choose "Public hosted zone"
+4. Click "Create hosted zone"
+5. **Important**: Update name servers at your domain registrar to point to Route 53 name servers
+6. Then follow Step 4 above to create the CNAME record
 
-1. Click "Create record"
-2. Configure the record:
-   - **Record name**: Leave blank
-   - **Record type**: `A - Routes traffic to an IPv4 address and some AWS resources`
-   - **Alias**: Enable
-   - **Route traffic to**: Select "Alias to another record in this hosted zone" or use CloudFront distribution if applicable
-   - For GitHub Pages, you'll need to use A records with IP addresses (see Option A)
+## Step 5: Configure GitHub Pages Custom Domain
 
-## Step 4: Configure GitHub Pages Custom Domain
-
-1. Go to your GitHub repository: `InquiryInstitute/singh.inquiry.institute`
+1. Go to your GitHub repository: `https://github.com/InquiryInstitute/singh.inquiry.institute`
 2. Navigate to **Settings** → **Pages**
 3. Under "Custom domain", enter: `singh.inquiry.institute`
-4. Check "Enforce HTTPS" (recommended)
-5. GitHub will automatically create a CNAME file in your repository
+4. Check **"Enforce HTTPS"** (recommended)
+5. Click **"Save"**
+6. GitHub will verify the domain and create/update the CNAME file in your repository
 
-## Step 5: Update Name Servers (if domain is registered elsewhere)
+**Note**: The CNAME file has already been created in this repository at the root level. GitHub will use it automatically.
 
-If your domain is registered with a different registrar:
+## Step 6: Update Name Servers (if needed)
 
-1. In Route 53, go to your hosted zone
-2. Note the 4 name server addresses (e.g., `ns-123.awsdns-12.com`)
-3. Go to your domain registrar's control panel
-4. Update the name servers to the Route 53 name servers provided
+If your domain `inquiry.institute` is registered with a different registrar and you're using Route 53:
 
-## Step 6: Verify DNS Propagation
+1. In Route 53, go to your `inquiry.institute` hosted zone
+2. Note the 4 name server addresses displayed (e.g., `ns-123.awsdns-12.com`, `ns-456.awsdns-45.net`, etc.)
+3. Go to your domain registrar's control panel (where you registered `inquiry.institute`)
+4. Find the DNS/Name Server settings
+5. Update the name servers to the Route 53 name servers provided
+6. Save changes
 
-Wait for DNS propagation (can take up to 48 hours, usually much faster):
+**Note**: If name servers are already pointing to Route 53, skip this step.
+
+## Step 7: Verify DNS Propagation
+
+Wait for DNS propagation (can take 5 minutes to 48 hours, usually 15-30 minutes):
+
+### Using Command Line
 
 ```bash
-# Check A records
-dig singh.inquiry.institute A
+# Check CNAME record
+dig singh.inquiry.institute CNAME +short
 
-# Check CNAME records
-dig singh.inquiry.institute CNAME
+# Expected output: inquiryinstitute.github.io
+
+# Check full DNS resolution
+dig singh.inquiry.institute +short
 
 # Check name servers
-dig singh.inquiry.institute NS
+dig inquiry.institute NS +short
 ```
 
-Or use online tools:
-- https://dnschecker.org
-- https://www.whatsmydns.net
+### Using Online Tools
 
-## Step 7: SSL Certificate (HTTPS)
+- **DNS Checker**: https://dnschecker.org/#CNAME/singh.inquiry.institute
+- **What's My DNS**: https://www.whatsmydns.net/#CNAME/singh.inquiry.institute
+- **DNS Propagation**: https://dnspropagation.net/
 
-GitHub Pages automatically provisions SSL certificates via Let's Encrypt for custom domains. Once DNS is properly configured and GitHub detects the custom domain, HTTPS will be enabled automatically.
+### Verify in Route 53
+
+1. Go to your `inquiry.institute` hosted zone
+2. Look for the `singh` CNAME record
+3. Verify it shows `inquiryinstitute.github.io` as the value
+
+## Step 8: SSL Certificate (HTTPS)
+
+GitHub Pages automatically provisions SSL certificates via Let's Encrypt for custom domains. 
+
+**Timeline**:
+1. DNS propagates (5 minutes - 48 hours)
+2. GitHub detects the custom domain (usually within 1 hour after DNS propagation)
+3. Let's Encrypt certificate is provisioned (can take up to 24 hours)
+4. HTTPS becomes available automatically
+
+**To check status**:
+- Go to repository **Settings** → **Pages**
+- Look for the custom domain status indicator
+- Green checkmark = DNS configured correctly
+- "Certificate is being provisioned" = wait for certificate
+- "Enforce HTTPS" checkbox will become available once certificate is ready
+
+## Quick Setup Checklist
+
+- [ ] Access Route 53 console
+- [ ] Open `inquiry.institute` hosted zone (or create if needed)
+- [ ] Create CNAME record: `singh` → `inquiryinstitute.github.io`
+- [ ] Verify name servers at domain registrar point to Route 53
+- [ ] Configure custom domain in GitHub Pages: `singh.inquiry.institute`
+- [ ] Enable "Enforce HTTPS" in GitHub Pages settings
+- [ ] Wait for DNS propagation (check with `dig` or online tools)
+- [ ] Wait for SSL certificate provisioning (up to 24 hours)
+- [ ] Test site: https://singh.inquiry.institute
 
 ## Troubleshooting
 
 ### Domain not resolving
-- Verify DNS records are correct
-- Check name servers are updated at registrar
-- Wait for DNS propagation (up to 48 hours)
+
+**Check DNS records:**
+```bash
+dig singh.inquiry.institute CNAME
+# Should return: inquiryinstitute.github.io
+```
+
+**Common issues:**
+- CNAME record name should be `singh` (not `singh.inquiry.institute`)
+- Verify the record exists in the correct hosted zone
+- Check name servers are pointing to Route 53
+- Wait for DNS propagation (can take up to 48 hours)
 
 ### HTTPS not working
-- Ensure "Enforce HTTPS" is enabled in GitHub Pages settings
-- Wait for Let's Encrypt certificate provisioning (can take up to 24 hours)
-- Verify DNS is correctly pointing to GitHub Pages
+
+**Check certificate status:**
+1. Go to GitHub repository → Settings → Pages
+2. Look for custom domain status
+3. Check if "Enforce HTTPS" is available and enabled
+
+**Common issues:**
+- DNS must be fully propagated before certificate can be issued
+- Certificate provisioning can take up to 24 hours
+- Ensure "Enforce HTTPS" is checked in GitHub Pages settings
+- Verify CNAME record is correct
 
 ### CNAME conflicts
-- If using apex domain, you cannot use CNAME. Use A records instead.
-- Ensure no conflicting records exist in your DNS zone
+
+- Ensure no duplicate CNAME records exist
+- Check for conflicting A records (remove if present)
+- Verify the record is in the correct hosted zone
+
+### GitHub Pages not detecting domain
+
+- Ensure CNAME file exists in repository root with content: `singh.inquiry.institute`
+- Verify DNS is resolving correctly
+- Check GitHub Pages settings show the custom domain
+- Wait a few minutes after DNS changes for GitHub to detect
+
+### Still having issues?
+
+1. **Verify Route 53 record:**
+   - Record name: `singh`
+   - Record type: `CNAME`
+   - Value: `inquiryinstitute.github.io`
+
+2. **Check GitHub Pages:**
+   - Custom domain: `singh.inquiry.institute`
+   - CNAME file exists in repo
+   - Pages source is set to GitHub Actions
+
+3. **Test DNS:**
+   ```bash
+   dig singh.inquiry.institute CNAME +short
+   # Should return: inquiryinstitute.github.io
+   ```
 
 ## Additional Resources
 
