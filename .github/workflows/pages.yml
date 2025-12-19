@@ -28,30 +28,20 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Setup Node.js (for static site generation if needed)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
       - name: Build static site
         run: |
           # Create _site directory for static files
           mkdir -p _site
           # Copy HTML files
-          cp index.html _site/ || true
+          cp index.html _site/
           # Copy .nojekyll to disable Jekyll processing
-          cp .nojekyll _site/ 2>/dev/null || touch _site/.nojekyll
+          touch _site/.nojekyll
           # Copy CNAME for custom domain
-          cp CNAME _site/ 2>/dev/null || true
-          # Copy other static assets if needed
-          cp -r docs _site/ 2>/dev/null || true
-          cp *.md _site/ 2>/dev/null || true
-          # Ensure index.html exists
-          if [ ! -f _site/index.html ]; then
-            echo "Error: index.html not found"
-            exit 1
-          fi
-          echo "Built static site with:"
+          cp CNAME _site/
+          # Copy other static assets
+          [ -d docs ] && cp -r docs _site/ || true
+          # List what we're deploying
+          echo "Files to deploy:"
           ls -la _site/
       
       - name: Upload artifact
