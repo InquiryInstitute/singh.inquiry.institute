@@ -1,6 +1,9 @@
 # Transcript Collection Status
 
-## Current Status: ❌ No Transcripts Downloaded Yet
+## Current Status: ⚠️ API Removed - Need Alternative Method
+
+**Issue**: Khan Academy API has been removed (returns 410 Gone)
+**Workaround**: Can download transcripts directly from YouTube IDs
 
 **Last Updated**: 2025-12-16
 
@@ -20,7 +23,20 @@
 
 ## Next Steps to Get Transcripts
 
-### Option 1: Quick Test (10 videos)
+**⚠️ IMPORTANT**: Khan Academy API has been removed. Use one of these alternatives:
+
+### Option 1: Download from YouTube IDs (Recommended)
+
+If you have a list of YouTube video IDs:
+
+```bash
+# Download transcripts for specific YouTube IDs
+python scripts/download_transcripts_only.py \
+  --youtube-ids "VIDEO_ID1,VIDEO_ID2,VIDEO_ID3" \
+  --max 10
+```
+
+### Option 2: Quick Test (10 videos) - May Not Work
 
 ```bash
 # 1. Install dependencies
