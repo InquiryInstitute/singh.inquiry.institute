@@ -1,0 +1,38 @@
+# Khan Academy Data Collection Pipeline
+# Core dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+youtube-dl>=2021.12.17
+yt-dlp>=2023.11.16  # Modern alternative to youtube-dl
+
+# Data processing
+pandas>=2.1.0
+numpy>=1.24.0
+tqdm>=4.66.0  # Progress bars
+
+# API and web scraping
+selenium>=4.15.0  # For dynamic content if needed
+playwright>=1.40.0  # Alternative browser automation
+
+# Data storage
+sqlalchemy>=2.0.0
+sqlite3  # Built-in, but listed for reference
+
+# JSON and configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Logging and utilities
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+# Video processing (optional, for metadata extraction)
+ffmpeg-python>=0.2.0  # Requires ffmpeg binary
+
+# Transcript processing
+webvtt-py>=0.4.6  # For WebVTT subtitle files
+
+# Google Cloud Storage
+google-cloud-storage>=2.14.0
+google-auth>=2.23.0

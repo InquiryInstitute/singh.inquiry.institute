@@ -1,0 +1,46 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: khan-academy-downloader
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/execution-environment: gen2
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "10"
+        run.googleapis.com/cpu-throttling: "false"
+        run.googleapis.com/memory: "4Gi"
+        run.googleapis.com/cpu: "2"
+        run.googleapis.com/timeout: "3600s"  # 1 hour max
+    spec:
+      containerConcurrency: 1
+      containers:
+      - image: gcr.io/PROJECT_ID/khan-academy-downloader:latest
+        ports:
+        - name: http1
+          containerPort: 8080
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcs-credentials/credentials.json
+        - name: GCS_BUCKET
+          value: "khan-academy-videos"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+        volumeMounts:
+        - name: gcs-credentials
+          mountPath: /secrets/gcs-credentials
+          readOnly: true
+      volumes:
+      - name: gcs-credentials
+        secret:
+          secretName: gcs-credentials
+  traffic:
+  - percent: 100
+    latestRevision: true

@@ -1,0 +1,5 @@
+project_id  = "your-gcp-project-id"
+region      = "us-central1"
+bucket_name = "khan-academy-videos"
+machine_type = "e2-standard-4"
+disk_size   = 100

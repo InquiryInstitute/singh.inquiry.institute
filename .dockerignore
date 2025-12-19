@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+venv
+env
+.venv
+
+# Data (don't copy large files)
+data/videos/
+data/transcripts/*.json
+data/transcripts/*.txt
+*.mp4
+*.vtt
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (optional, can include if needed)
+# docs/
+
+# Logs
+logs/
+*.log
