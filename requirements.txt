@@ -36,3 +36,7 @@ webvtt-py>=0.4.6  # For WebVTT subtitle files
 # Google Cloud Storage
 google-cloud-storage>=2.14.0
 google-auth>=2.23.0
+
+# Supabase
+supabase>=2.0.0
+postgrest>=0.13.0
