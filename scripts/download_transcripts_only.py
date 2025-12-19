@@ -202,6 +202,8 @@ def main():
     parser.add_argument("--catalog", type=Path, 
                        default=Path("data/metadata/khan_academy_catalog.json"),
                        help="Path to video catalog JSON (local or gs:// path)")
+    parser.add_argument("--youtube-ids", type=str, default=None,
+                       help="Comma-separated list of YouTube video IDs to download transcripts for")
     parser.add_argument("--gcs-bucket", type=str, default=None,
                        help="Google Cloud Storage bucket name")
     parser.add_argument("--gcs-credentials", type=Path, default=None,
@@ -211,7 +213,7 @@ def main():
     parser.add_argument("--max", type=int, default=None,
                        help="Maximum number of transcripts to download")
     parser.add_argument("--discover-first", action="store_true",
-                       help="Discover all videos first, then download transcripts")
+                       help="Discover all videos first, then download transcripts (NOTE: API removed, may not work)")
     
     args = parser.parse_args()
     
@@ -221,21 +223,28 @@ def main():
     
     if args.gcs_bucket:
         logger.info(f"Initializing GCS storage for bucket: {args.gcs_bucket}")
-        from storage.gcs_storage import GCSStorage
-        
-        credentials_path = args.gcs_credentials
-        if not credentials_path:
-            credentials_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
-            if credentials_path:
-                credentials_path = Path(credentials_path)
-        
         try:
+            from storage.gcs_storage import GCSStorage
+            
+            credentials_path = args.gcs_credentials
+            if not credentials_path:
+                credentials_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+                if credentials_path:
+                    credentials_path = Path(credentials_path)
+            
             gcs_storage = GCSStorage(args.gcs_bucket, str(credentials_path) if credentials_path else None)
             upload_to_gcs = True
             logger.info("GCS upload enabled")
+        except ImportError as e:
+            logger.warning(f"GCS storage not available (missing dependencies): {e}")
+            logger.info("Continuing with local storage only")
+            gcs_storage = None
+            upload_to_gcs = False
         except Exception as e:
             logger.error(f"Failed to initialize GCS: {e}")
             logger.info("Continuing with local storage only")
+            gcs_storage = None
+            upload_to_gcs = False
     
     # Discover videos if requested
     if args.discover_first:
@@ -255,21 +264,50 @@ def main():
         
         args.catalog = catalog_path
     
-    # Check catalog exists
-    if not args.catalog.exists() and not upload_to_gcs:
+    # Handle YouTube IDs directly
+    if args.youtube_ids:
+        logger.info(f"Downloading transcripts for YouTube IDs: {args.youtube_ids}")
+        downloader = TranscriptDownloader(
+            gcs_storage=gcs_storage,
+            upload_to_gcs=upload_to_gcs,
+            output_dir=args.output_dir
+        )
+        
+        youtube_ids = [vid.strip() for vid in args.youtube_ids.split(',')]
+        if args.max:
+            youtube_ids = youtube_ids[:args.max]
+        
+        results = []
+        failed = []
+        for youtube_id in youtube_ids:
+            video_url = f"https://www.youtube.com/watch?v={youtube_id}"
+            video_meta = {'youtube_id': youtube_id, 'id': youtube_id, 'title': f'Video {youtube_id}'}
+            result = downloader.download_transcript(video_url, video_meta)
+            if result.get('success'):
+                results.append(result)
+            else:
+                failed.append(video_meta)
+            time.sleep(0.5)  # Rate limiting
+        
+        logger.info(f"Complete! Downloaded {len(results)} transcripts, {len(failed)} failed")
+    elif args.catalog.exists() or upload_to_gcs:
+        # Download from catalog
+        logger.info("Starting transcript download from catalog...")
+        downloader = TranscriptDownloader(
+            gcs_storage=gcs_storage,
+            upload_to_gcs=upload_to_gcs,
+            output_dir=args.output_dir
+        )
+        
+        results, failed = downloader.download_from_catalog(args.catalog, max_videos=args.max)
+        logger.info(f"Complete! Downloaded {len(results)} transcripts, {len(failed)} failed")
+    else:
         logger.error(f"Catalog file not found: {args.catalog}")
-        logger.info("Run with --discover-first to create catalog, or provide valid catalog path")
+        logger.info("Options:")
+        logger.info("  1. Run with --discover-first to create catalog (NOTE: API removed, may not work)")
+        logger.info("  2. Provide --youtube-ids with comma-separated YouTube video IDs")
+        logger.info("  3. Provide a valid catalog file path with --catalog")
         return
-    
-    # Download transcripts
-    logger.info("Starting transcript download...")
-    downloader = TranscriptDownloader(
-        gcs_storage=gcs_storage,
-        upload_to_gcs=upload_to_gcs,
-        output_dir=args.output_dir
-    )
-    
-    results, failed = downloader.download_from_catalog(args.catalog, max_videos=args.max)
     
     logger.info(f"Complete! Downloaded {len(results)} transcripts, {len(failed)} failed")
     
