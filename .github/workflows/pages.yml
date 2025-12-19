@@ -28,14 +28,30 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - name: Setup Node.js (for static site generation if needed)
+        uses: actions/setup-node@v4
         with:
-          source: ./
-          destination: ./_site
+          node-version: '20'
+      
+      - name: Build static site
+        run: |
+          # Create _site directory for static files
+          mkdir -p _site
+          # Copy HTML files
+          cp index.html _site/ || true
+          # Copy other static assets if needed
+          cp -r docs _site/ 2>/dev/null || true
+          cp *.md _site/ 2>/dev/null || true
+          # Ensure index.html exists
+          if [ ! -f _site/index.html ]; then
+            echo "Error: index.html not found"
+            exit 1
+          fi
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
       
       - name: Deploy to GitHub Pages
         id: deployment
