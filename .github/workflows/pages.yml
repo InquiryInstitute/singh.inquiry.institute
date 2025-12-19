@@ -39,6 +39,10 @@ jobs:
           mkdir -p _site
           # Copy HTML files
           cp index.html _site/ || true
+          # Copy .nojekyll to disable Jekyll processing
+          cp .nojekyll _site/ 2>/dev/null || touch _site/.nojekyll
+          # Copy CNAME for custom domain
+          cp CNAME _site/ 2>/dev/null || true
           # Copy other static assets if needed
           cp -r docs _site/ 2>/dev/null || true
           cp *.md _site/ 2>/dev/null || true
@@ -47,6 +51,8 @@ jobs:
             echo "Error: index.html not found"
             exit 1
           fi
+          echo "Built static site with:"
+          ls -la _site/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
