@@ -634,7 +634,7 @@
     <script>
         // Supabase configuration
         const SUPABASE_URL = 'https://xougqdomkoisrxdnagcj.supabase.co';
-        const SUPABASE_ANON_KEY = localStorage.getItem('SUPABASE_ANON_KEY') || '';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdWdxZG9ta29pc3J4ZG5hZ2NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NjIwMTIsImV4cCI6MjA4MTUzODAxMn0.eA1vXG6UVI1AjUOXN7q3gTlSyPoDByuVehOcKPjHmvs';
 
         // Sample lectures data (will be replaced with actual Khan Academy data)
         const lectures = [
@@ -994,16 +994,7 @@
             toggleCandle();
         });
 
-        // Check for Supabase key on load
-        window.addEventListener('load', () => {
-            if (!SUPABASE_ANON_KEY) {
-                const key = prompt('Enter Supabase Anon Key (or leave empty to skip):');
-                if (key) {
-                    localStorage.setItem('SUPABASE_ANON_KEY', key);
-                    window.location.reload();
-                }
-            }
-        });
+        // Supabase key is set above, no need to prompt
 
         // Initialize
         renderLectures();
