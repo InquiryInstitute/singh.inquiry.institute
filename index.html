@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Singh Inquiry Institute - Khan Academy Lectures</title>
+    <title>Khan Academy Lectures - Inquiry Institute</title>
     <style>
         * {
             margin: 0;
@@ -132,6 +132,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links .nav-link:not(.nav-cta) {
+                display: none;
+            }
         }
 
         .nav-link {
@@ -441,7 +447,7 @@
     <nav>
         <div class="nav-container">
             <div class="nav-content">
-                <a href="/" class="nav-logo">
+                <a href="https://inquiry.institute/" class="nav-logo">
                     <img src="https://inquiry.institute/logo.png" alt="Inquiry Institute" width="32" height="32" class="logo-light" />
                     <img src="https://inquiry.institute/logo-white.png" alt="Inquiry Institute" width="32" height="32" class="logo-dark" style="display: none;" />
                     <span>Inquiry Institute</span>
@@ -459,7 +465,7 @@
     <div class="container">
         <h1>Khan Academy Lectures</h1>
         <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 2rem;">
-            Select lectures and assign faculty members to deliver them. Each lecture can be taught by a different aFaculty persona.
+            Select lectures and assign aFaculty members to deliver them. Each lecture can be taught by a different aFaculty persona.
         </p>
 
         <!-- Lectures Section -->
