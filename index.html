@@ -768,28 +768,28 @@
         // Generate audio using Supabase Edge Function
         async function generateAudio(text, facultyName) {
             if (!SUPABASE_ANON_KEY) {
-                throw new Error('Supabase key not set. Please set SUPABASE_ANON_KEY in localStorage.');
+                throw new Error('Supabase key not set.');
             }
 
-            const response = await fetch(`${SUPABASE_URL}/functions/v1/text-to-speech`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+            // Use Supabase client to invoke the function
+            const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+            const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            
+            const { data, error } = await supabase.functions.invoke('text-to-speech', {
+                body: {
                     faculty_name: facultyName,
                     text: text
-                })
+                }
             });
 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error || `Supabase function error: ${response.statusText}`);
+            if (error) {
+                throw new Error(error.message || 'Failed to invoke function');
             }
 
-            const data = await response.json();
-            
+            if (!data || !data.audio_base64) {
+                throw new Error(data?.error || 'No audio data returned');
+            }
+
             // Convert base64 to blob
             const binaryString = atob(data.audio_base64);
             const bytes = new Uint8Array(binaryString.length);
