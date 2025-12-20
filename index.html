@@ -272,6 +272,87 @@
             ring-color: var(--amber-500);
         }
 
+        .auto-selected {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--amber-600);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Playback Widget */
+        .playback-widget {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .playback-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            background: var(--amber-500);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .play-btn:hover {
+            background: var(--amber-600);
+        }
+
+        .play-btn:disabled {
+            background: var(--slate-400);
+            cursor: not-allowed;
+        }
+
+        .play-btn.playing {
+            background: var(--indigo-600);
+        }
+
+        .playback-status {
+            flex: 1;
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .generating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid var(--slate-300);
+            border-top-color: var(--amber-500);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Lantern (Patronage) */
         .lantern-button {
             position: fixed;
@@ -551,48 +632,230 @@
     </div>
 
     <script>
+        // ElevenLabs API configuration
+        const ELEVENLABS_API_KEY = localStorage.getItem('ELEVENLABS_API_KEY') || '';
+        const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1';
+
         // Sample lectures data (will be replaced with actual Khan Academy data)
         const lectures = [
-            { id: 1, title: "Introduction to Algebra", subject: "Math", topic: "Algebra", duration: "10:30", youtubeId: "NybHckSEQBI" },
-            { id: 2, title: "Basic Geometry", subject: "Math", topic: "Geometry", duration: "15:45", youtubeId: "xZ6g1fX2Y7g" },
-            { id: 3, title: "World War I", subject: "History", topic: "World History", duration: "20:15", youtubeId: "_XPZQ0LAlR4" },
-            { id: 4, title: "Photosynthesis", subject: "Biology", topic: "Biology", duration: "12:20", youtubeId: "sQK3Yr4Sc_k" },
-            { id: 5, title: "Newton's Laws", subject: "Physics", topic: "Physics", duration: "18:30", youtubeId: "kKKM8Y-u7ds" },
-            { id: 6, title: "The Water Cycle", subject: "Earth Science", topic: "Earth Science", duration: "8:45", youtubeId: "al-do-HGuIk" },
+            { id: 1, title: "Introduction to Algebra", subject: "Math", topic: "Algebra", duration: "10:30", youtubeId: "NybHckSEQBI", transcript: "Welcome to algebra. Today we'll explore the fundamental concepts..." },
+            { id: 2, title: "Basic Geometry", subject: "Math", topic: "Geometry", duration: "15:45", youtubeId: "xZ6g1fX2Y7g", transcript: "Geometry is the study of shapes and space. Let's begin..." },
+            { id: 3, title: "World War I", subject: "History", topic: "World History", duration: "20:15", youtubeId: "_XPZQ0LAlR4", transcript: "World War I, also known as the Great War, began in 1914..." },
+            { id: 4, title: "Photosynthesis", subject: "Biology", topic: "Biology", duration: "12:20", youtubeId: "sQK3Yr4Sc_k", transcript: "Photosynthesis is the process by which plants convert light energy..." },
+            { id: 5, title: "Newton's Laws", subject: "Physics", topic: "Physics", duration: "18:30", youtubeId: "kKKM8Y-u7ds", transcript: "Newton's laws of motion form the foundation of classical mechanics..." },
+            { id: 6, title: "The Water Cycle", subject: "Earth Science", topic: "Earth Science", duration: "8:45", youtubeId: "al-do-HGuIk", transcript: "The water cycle describes the continuous movement of water..." },
         ];
 
-        // Sample faculty (aFaculty personas)
-        const faculty = [
-            { id: "shelley", name: "Mary Shelley", expertise: ["Science", "Literature", "Philosophy"] },
-            { id: "darwin", name: "Charles Darwin", expertise: ["Biology", "Science", "Natural History"] },
-            { id: "einstein", name: "Albert Einstein", expertise: ["Physics", "Mathematics", "Philosophy"] },
-            { id: "curie", name: "Marie Curie", expertise: ["Physics", "Chemistry", "Science"] },
-            { id: "plato", name: "Plato", expertise: ["Philosophy", "Mathematics", "History"] },
-            { id: "tesla", name: "Nikola Tesla", expertise: ["Physics", "Engineering", "Mathematics"] },
+        // Faculty data with expertise mapping and voice prompts
+        // This will be loaded from Supabase, but we have defaults
+        let faculty = [
+            { 
+                id: "shelley", 
+                name: "Mary Shelley", 
+                expertise: ["Science", "Literature", "Philosophy"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A thoughtful, articulate female voice with a British accent, speaking with poetic elegance and scientific curiosity."
+            },
+            { 
+                id: "darwin", 
+                name: "Charles Darwin", 
+                expertise: ["Biology", "Science", "Natural History"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A scholarly male voice with a British accent, speaking with careful observation and scientific precision."
+            },
+            { 
+                id: "einstein", 
+                name: "Albert Einstein", 
+                expertise: ["Physics", "Mathematics", "Philosophy"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A thoughtful male voice with a German accent, speaking with intellectual depth and clarity."
+            },
+            { 
+                id: "curie", 
+                name: "Marie Curie", 
+                expertise: ["Physics", "Chemistry", "Science"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A determined female voice with a Polish-French accent, speaking with scientific rigor and passion."
+            },
+            { 
+                id: "plato", 
+                name: "Plato", 
+                expertise: ["Philosophy", "Mathematics", "History"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A wise, authoritative male voice with a classical Greek accent, speaking with philosophical depth."
+            },
+            { 
+                id: "tesla", 
+                name: "Nikola Tesla", 
+                expertise: ["Physics", "Engineering", "Mathematics"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "An innovative male voice with a Serbian accent, speaking with technical precision and visionary insight."
+            },
         ];
+
+        // Subject to expertise mapping for automatic faculty selection
+        const subjectExpertiseMap = {
+            "Math": ["Mathematics", "Physics", "Engineering"],
+            "Physics": ["Physics", "Mathematics", "Engineering"],
+            "Biology": ["Biology", "Science", "Natural History"],
+            "Chemistry": ["Chemistry", "Physics", "Science"],
+            "History": ["History", "Philosophy"],
+            "Earth Science": ["Science", "Natural History"],
+            "Science": ["Science", "Physics", "Biology", "Chemistry"],
+        };
+
+        // Function to find best faculty for a lecture
+        function findBestFaculty(lecture) {
+            const subject = lecture.subject;
+            const relevantExpertise = subjectExpertiseMap[subject] || [subject];
+            
+            // Score each faculty based on expertise match
+            const scoredFaculty = faculty.map(f => {
+                let score = 0;
+                relevantExpertise.forEach(exp => {
+                    if (f.expertise.some(e => e.toLowerCase().includes(exp.toLowerCase()))) {
+                        score += 2;
+                    }
+                });
+                // Bonus for exact subject match
+                if (f.expertise.some(e => e.toLowerCase() === subject.toLowerCase())) {
+                    score += 3;
+                }
+                return { ...f, score };
+            });
+
+            // Return faculty with highest score
+            scoredFaculty.sort((a, b) => b.score - a.score);
+            return scoredFaculty[0] || faculty[0];
+        }
+
+        // Load faculty from Supabase
+        async function loadFacultyFromSupabase() {
+            try {
+                // Get Supabase credentials
+                const supabaseUrl = 'https://xougqdomkoisrxdnagcj.supabase.co';
+                const supabaseKey = localStorage.getItem('SUPABASE_KEY') || '';
+                
+                if (!supabaseKey) {
+                    console.warn('Supabase key not found, using default faculty data');
+                    return;
+                }
+
+                const response = await fetch(`${supabaseUrl}/rest/v1/faculty?select=id,surname,given_name,fields,elevenlabs_voice_id,elevenlabs_voice_prompt&active=eq.true`, {
+                    headers: {
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Map Supabase faculty to our format
+                    faculty = data.map(f => ({
+                        id: f.id,
+                        name: `${f.given_name || ''} ${f.surname || ''}`.trim() || f.id,
+                        expertise: f.fields || [],
+                        elevenlabs_voice_id: f.elevenlabs_voice_id,
+                        elevenlabs_voice_prompt: f.elevenlabs_voice_prompt
+                    }));
+                    console.log('Loaded faculty from Supabase:', faculty.length);
+                }
+            } catch (error) {
+                console.error('Failed to load faculty from Supabase:', error);
+            }
+        }
+
+        // Generate audio using ElevenLabs
+        async function generateAudio(text, voiceId, voicePrompt) {
+            if (!ELEVENLABS_API_KEY) {
+                throw new Error('ElevenLabs API key not set. Please set ELEVENLABS_API_KEY in localStorage.');
+            }
+
+            // Use voice_id if available, otherwise use voice cloning with prompt
+            const voiceSettings = {
+                stability: 0.5,
+                similarity_boost: 0.75,
+                style: 0.0,
+                use_speaker_boost: true
+            };
+
+            let voiceEndpoint;
+            if (voiceId) {
+                // Use existing voice ID
+                voiceEndpoint = `${ELEVENLABS_API_URL}/text-to-speech/${voiceId}`;
+            } else {
+                // Use voice cloning or default voice
+                // For now, use a default voice (you can change this)
+                voiceEndpoint = `${ELEVENLABS_API_URL}/text-to-speech/21m00Tcm4TlvDq8ikWAM`; // Default voice
+            }
+
+            const response = await fetch(voiceEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'audio/mpeg',
+                    'Content-Type': 'application/json',
+                    'xi-api-key': ELEVENLABS_API_KEY
+                },
+                body: JSON.stringify({
+                    text: text,
+                    model_id: 'eleven_multilingual_v2',
+                    voice_settings: voiceSettings
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error(`ElevenLabs API error: ${error}`);
+            }
+
+            return response.blob();
+        }
 
         // Render lectures
-        function renderLectures() {
+        async function renderLectures() {
+            // Load faculty from Supabase first
+            await loadFacultyFromSupabase();
+            
             const grid = document.getElementById('lecturesGrid');
-            grid.innerHTML = lectures.map(lecture => `
+            grid.innerHTML = lectures.map(lecture => {
+                // Auto-select best faculty
+                const bestFaculty = findBestFaculty(lecture);
+                const audioId = `audio-${lecture.id}`;
+                
+                return `
                 <div class="lecture-card" data-lecture-id="${lecture.id}">
                     <div class="lecture-title">${lecture.title}</div>
                     <div class="lecture-meta">
                         ${lecture.subject} • ${lecture.topic} • ${lecture.duration}
+                    </div>
+                    <div class="auto-selected">
+                        ✨ Recommended: ${bestFaculty.name}
                     </div>
                     <div class="faculty-selector">
                         <label>Select Faculty:</label>
                         <select class="faculty-select" data-lecture-id="${lecture.id}">
                             <option value="">-- Choose faculty --</option>
                             ${faculty.map(f => `
-                                <option value="${f.id}">${f.name}</option>
+                                <option value="${f.id}" ${f.id === bestFaculty.id ? 'selected' : ''}>${f.name}</option>
                             `).join('')}
                         </select>
                     </div>
+                    <div class="playback-widget">
+                        <div class="playback-controls">
+                            <button class="play-btn" data-lecture-id="${lecture.id}" id="play-${lecture.id}" aria-label="Play lecture">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </button>
+                            <div class="playback-status" id="status-${lecture.id}">Ready to generate</div>
+                        </div>
+                        <audio id="${audioId}" style="display: none;"></audio>
+                    </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
-            // Add event listeners
+            // Add event listeners for faculty selection
             document.querySelectorAll('.faculty-select').forEach(select => {
                 select.addEventListener('change', (e) => {
                     const lectureId = parseInt(e.target.dataset.lectureId);
@@ -608,6 +871,88 @@
                     }
                 });
             });
+
+            // Add event listeners for playback
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const lectureId = parseInt(e.target.closest('.play-btn').dataset.lectureId);
+                    await handlePlayback(lectureId);
+                });
+            });
+        }
+
+        // Handle audio playback
+        async function handlePlayback(lectureId) {
+            const lecture = lectures.find(l => l.id === lectureId);
+            if (!lecture) return;
+
+            const card = document.querySelector(`[data-lecture-id="${lectureId}"]`);
+            const select = card.querySelector('.faculty-select');
+            const facultyId = select.value;
+            
+            if (!facultyId) {
+                alert('Please select a faculty member first');
+                return;
+            }
+
+            const selectedFaculty = faculty.find(f => f.id === facultyId);
+            const playBtn = document.getElementById(`play-${lectureId}`);
+            const statusEl = document.getElementById(`status-${lectureId}`);
+            const audioEl = document.getElementById(`audio-${lectureId}`);
+
+            try {
+                // Check if audio already generated
+                const audioUrl = localStorage.getItem(`audio-${lectureId}-${facultyId}`);
+                
+                if (audioUrl && audioUrl.startsWith('blob:')) {
+                    // Use cached audio
+                    audioEl.src = audioUrl;
+                    audioEl.play();
+                    playBtn.classList.add('playing');
+                    playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                    statusEl.textContent = `Playing: ${selectedFaculty.name}`;
+                    return;
+                }
+
+                // Generate new audio
+                playBtn.disabled = true;
+                statusEl.innerHTML = '<div class="generating"><div class="spinner"></div> Generating audio...</div>';
+                
+                const audioBlob = await generateAudio(
+                    lecture.transcript || `Welcome to ${lecture.title}. Today we'll explore ${lecture.topic}.`,
+                    selectedFaculty.elevenlabs_voice_id,
+                    selectedFaculty.elevenlabs_voice_prompt
+                );
+
+                // Create audio URL and play
+                const audioUrl = URL.createObjectURL(audioBlob);
+                localStorage.setItem(`audio-${lectureId}-${facultyId}`, audioUrl);
+                audioEl.src = audioUrl;
+                audioEl.play();
+                
+                playBtn.disabled = false;
+                playBtn.classList.add('playing');
+                playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                statusEl.textContent = `Playing: ${selectedFaculty.name}`;
+
+                // Handle audio end
+                audioEl.onended = () => {
+                    playBtn.classList.remove('playing');
+                    playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                    statusEl.textContent = 'Ready to play again';
+                };
+
+                // Handle pause
+                audioEl.onpause = () => {
+                    playBtn.classList.remove('playing');
+                    playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                };
+
+            } catch (error) {
+                console.error('Error generating audio:', error);
+                statusEl.textContent = `Error: ${error.message}`;
+                playBtn.disabled = false;
+            }
         }
 
         // Lantern functionality
@@ -660,6 +1005,17 @@
             window.open(issueUrl, '_blank');
             feedbackForm.reset();
             toggleCandle();
+        });
+
+        // Check for ElevenLabs API key on load
+        window.addEventListener('load', () => {
+            if (!ELEVENLABS_API_KEY) {
+                const key = prompt('Enter ElevenLabs API Key (or leave empty to skip):');
+                if (key) {
+                    localStorage.setItem('ELEVENLABS_API_KEY', key);
+                    window.location.reload();
+                }
+            }
         });
 
         // Initialize
