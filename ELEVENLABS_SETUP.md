@@ -41,25 +41,30 @@ SET elevenlabs_voice_id = 'YOUR_VOICE_ID'  -- Optional: if you have a cloned voi
 WHERE id = 'a.shelley';
 ```
 
-### 3. Set ElevenLabs API Key
+### 3. Set Supabase Secrets
 
-The API key can be set in two ways:
+The ElevenLabs API key is stored securely in Supabase secrets (not exposed to client):
+
+```bash
+supabase secrets set ELEVENLABS_API_KEY=sk_ca784069ef0a2893180b5e730db281ad04313dff403a0a8d
+```
+
+See `SUPABASE_TTS_SETUP.md` for detailed setup instructions.
+
+### 4. Set Supabase Anon Key in Browser
+
+The frontend needs the Supabase Anon Key to call the Edge Function:
 
 **Option A: Browser Prompt (First Load)**
-- When you first visit the page, you'll be prompted to enter the API key
+- When you first visit the page, you'll be prompted to enter the Supabase Anon Key
 - It's stored in localStorage
 
 **Option B: Set Manually**
 ```javascript
-localStorage.setItem('ELEVENLABS_API_KEY', 'your-api-key-here');
+localStorage.setItem('SUPABASE_ANON_KEY', 'your-anon-key-here');
 ```
 
-### 4. Get ElevenLabs API Key
-
-1. Go to: https://elevenlabs.io/
-2. Sign up or log in
-3. Go to Profile → API Key
-4. Copy your API key
+Get your Supabase Anon Key from: https://supabase.com/dashboard/project/xougqdomkoisrxdnagcj/settings/api
 
 ## How It Works
 
@@ -69,9 +74,11 @@ localStorage.setItem('ELEVENLABS_API_KEY', 'your-api-key-here');
    - Matching score algorithm
 
 2. **Audio Generation**: When you click play:
-   - Fetches faculty voice prompt from Supabase
-   - Uses ElevenLabs API to generate audio from transcript
-   - Caches audio in browser localStorage
+   - Calls Supabase Edge Function with faculty name and text
+   - Edge Function fetches faculty voice prompt from database
+   - Edge Function calls ElevenLabs API (key stored securely in Supabase)
+   - Returns base64-encoded audio to frontend
+   - Frontend converts to blob and caches in localStorage
    - Plays audio in playback widget
 
 3. **Voice Selection**: 
