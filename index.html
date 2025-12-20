@@ -691,6 +691,13 @@
                 elevenlabs_voice_id: null,
                 elevenlabs_voice_prompt: "An innovative male voice with a Serbian accent, speaking with technical precision and visionary insight."
             },
+            { 
+                id: "churchill", 
+                name: "Winston Churchill", 
+                expertise: ["History", "Politics", "Government", "War"],
+                elevenlabs_voice_id: null,
+                elevenlabs_voice_prompt: "A commanding, eloquent male voice with a British accent, speaking with authority and historical perspective."
+            },
         ];
 
         // Subject to expertise mapping for automatic faculty selection
@@ -704,9 +711,84 @@
             "Science": ["Science", "Physics", "Biology", "Chemistry"],
         };
 
+        // Specific topic/course to faculty mapping for better matches
+        const topicFacultyMap = {
+            // History topics
+            "world war i": "churchill",
+            "world war 1": "churchill",
+            "wwi": "churchill",
+            "world war ii": "churchill",
+            "world war 2": "churchill",
+            "wwii": "churchill",
+            "british history": "churchill",
+            "war": "churchill",
+            "politics": "churchill",
+            "government": "churchill",
+            
+            // Science topics
+            "evolution": "darwin",
+            "natural selection": "darwin",
+            "biology": "darwin",
+            "species": "darwin",
+            "origin of species": "darwin",
+            "relativity": "einstein",
+            "quantum": "einstein",
+            "physics": "einstein",
+            "e=mc2": "einstein",
+            "theory of relativity": "einstein",
+            "radioactivity": "curie",
+            "radiation": "curie",
+            "chemistry": "curie",
+            "physics": "curie",
+            "polonium": "curie",
+            "radium": "curie",
+            
+            // Mathematics and Philosophy
+            "algebra": "plato",
+            "geometry": "plato",
+            "mathematics": "plato",
+            "philosophy": "plato",
+            "ethics": "plato",
+            "republic": "plato",
+            "socrates": "plato",
+            
+            // Engineering and Innovation
+            "electricity": "tesla",
+            "alternating current": "tesla",
+            "ac": "tesla",
+            "engineering": "tesla",
+            "invention": "tesla",
+            "wireless": "tesla",
+            
+            // Literature and Science Fiction
+            "frankenstein": "shelley",
+            "literature": "shelley",
+            "science fiction": "shelley",
+            "gothic": "shelley",
+        };
+
         // Function to find best faculty for a lecture
         function findBestFaculty(lecture) {
             const subject = lecture.subject;
+            const topic = (lecture.topic || '').toLowerCase();
+            const title = (lecture.title || '').toLowerCase();
+            
+            // First, check for specific topic/course matches
+            const searchText = `${topic} ${title}`.toLowerCase();
+            for (const [keyword, facultyId] of Object.entries(topicFacultyMap)) {
+                if (searchText.includes(keyword)) {
+                    const matchedFaculty = faculty.find(f => 
+                        f.id.toLowerCase() === facultyId.toLowerCase() || 
+                        f.name.toLowerCase().includes(facultyId.toLowerCase())
+                    );
+                    if (matchedFaculty) {
+                        console.log(`Matched "${keyword}" to ${matchedFaculty.name}`);
+                        return matchedFaculty;
+                    }
+                }
+            }
+            
+            // Fall back to expertise-based matching
             const relevantExpertise = subjectExpertiseMap[subject] || [subject];
             
             // Score each faculty based on expertise match
@@ -720,6 +802,10 @@
                 // Bonus for exact subject match
                 if (f.expertise.some(e => e.toLowerCase() === subject.toLowerCase())) {
                     score += 3;
+                }
+                // Bonus if topic matches faculty's known works
+                if (topic && f.expertise.some(e => topic.includes(e.toLowerCase()))) {
+                    score += 5;
                 }
                 return { ...f, score };
             });
