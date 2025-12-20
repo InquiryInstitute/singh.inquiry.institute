@@ -783,11 +783,26 @@
             });
 
             if (error) {
+                console.error('Function error:', error);
+                // Check if it's a non-2xx status code error
+                if (error.message && error.message.includes('non-2xx')) {
+                    // Try to get more details from the error
+                    throw new Error(`Function error: ${error.message}. The function may not be deployed or there may be an issue with the request.`);
+                }
                 throw new Error(error.message || 'Failed to invoke function');
             }
 
-            if (!data || !data.audio_base64) {
-                throw new Error(data?.error || 'No audio data returned');
+            if (!data) {
+                throw new Error('No data returned from function');
+            }
+
+            // Check if there's an error in the response data
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            if (!data.audio_base64) {
+                throw new Error('No audio data returned from function');
             }
 
             // Convert base64 to blob
