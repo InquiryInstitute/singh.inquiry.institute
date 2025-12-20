@@ -775,43 +775,62 @@
             const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
             const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             
-            const { data, error } = await supabase.functions.invoke('text-to-speech', {
-                body: {
-                    faculty_name: facultyName,
-                    text: text
+            try {
+                const { data, error } = await supabase.functions.invoke('text-to-speech', {
+                    body: {
+                        faculty_name: facultyName,
+                        text: text
+                    }
+                });
+
+                if (error) {
+                    console.error('Function error:', error);
+                    // If error has context, try to extract the actual error message
+                    if (error.context && error.context.body) {
+                        const errorBody = typeof error.context.body === 'string' 
+                            ? JSON.parse(error.context.body) 
+                            : error.context.body;
+                        if (errorBody.error) {
+                            throw new Error(errorBody.error);
+                        }
+                    }
+                    // Check if it's a non-2xx status code error
+                    if (error.message && error.message.includes('non-2xx')) {
+                        throw new Error(`Function returned an error. The function may not be deployed or the faculty "${facultyName}" may not exist in the database.`);
+                    }
+                    throw new Error(error.message || 'Failed to invoke function');
                 }
-            });
 
-            if (error) {
-                console.error('Function error:', error);
-                // Check if it's a non-2xx status code error
-                if (error.message && error.message.includes('non-2xx')) {
-                    // Try to get more details from the error
-                    throw new Error(`Function error: ${error.message}. The function may not be deployed or there may be an issue with the request.`);
+                if (!data) {
+                    throw new Error('No data returned from function');
                 }
-                throw new Error(error.message || 'Failed to invoke function');
+
+                // Check if there's an error in the response data
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                if (!data.audio_base64) {
+                    throw new Error('No audio data returned from function');
+                }
+
+                return data;
+            } catch (err) {
+                // Re-throw with better error message
+                if (err.message) {
+                    throw err;
+                }
+                throw new Error(`Failed to generate audio: ${err}`);
             }
 
-            if (!data) {
-                throw new Error('No data returned from function');
+                // Convert base64 to blob
+                const binaryString = atob(data.audio_base64);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return new Blob([bytes], { type: data.audio_format || 'audio/mpeg' });
             }
-
-            // Check if there's an error in the response data
-            if (data.error) {
-                throw new Error(data.error);
-            }
-
-            if (!data.audio_base64) {
-                throw new Error('No audio data returned from function');
-            }
-
-            // Convert base64 to blob
-            const binaryString = atob(data.audio_base64);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return new Blob([bytes], { type: data.audio_format || 'audio/mpeg' });
         }
 
         // Render lectures
