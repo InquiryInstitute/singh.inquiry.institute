@@ -3,92 +3,645 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Singh Inquiry Institute</title>
+    <title>Singh Inquiry Institute - Khan Academy Lectures</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --background: #ffffff;
+            --foreground: #171717;
+            --card: #ffffff;
+            --card-foreground: #171717;
+            --primary: #171717;
+            --primary-foreground: #ffffff;
+            --secondary: #f4f4f5;
+            --secondary-foreground: #171717;
+            --muted: #f4f4f5;
+            --muted-foreground: #71717a;
+            --border: #e4e4e7;
+            --amber-500: #f59e0b;
+            --amber-600: #d97706;
+            --amber-400: #fbbf24;
+            --indigo-500: #6366f1;
+            --indigo-600: #4f46e5;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0a0a0a;
+                --foreground: #ededed;
+                --card: #0a0a0a;
+                --card-foreground: #ededed;
+                --secondary: #27272a;
+                --secondary-foreground: #ededed;
+                --muted: #27272a;
+                --muted-foreground: #a1a1aa;
+                --border: #27272a;
+            }
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--foreground);
+            background: var(--background);
+            font-family: 'EB Garamond', 'Georgia', serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header/Navigation */
+        nav {
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            nav {
+                background: rgba(15, 23, 42, 0.95);
+                border-bottom-color: var(--slate-700);
+            }
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--foreground);
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--slate-700);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-link {
+                color: var(--slate-300);
+            }
+        }
+
+        .nav-link:hover {
+            color: var(--amber-600);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--amber-500);
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-cta:hover {
+            background: var(--amber-600);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--foreground);
+        }
+
+        /* Lectures Section */
+        .lectures-section {
+            margin-top: 3rem;
+        }
+
+        .lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .lecture-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .lecture-card:hover {
+            border-color: var(--amber-500);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .lecture-card.selected {
+            border-color: var(--amber-500);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .lecture-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .lecture-meta {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .faculty-selector {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .faculty-selector label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .faculty-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background: var(--background);
+            color: var(--foreground);
+            font-size: 0.875rem;
+        }
+
+        .faculty-select:focus {
+            outline: none;
+            border-color: var(--amber-500);
+            ring: 2px;
+            ring-color: var(--amber-500);
+        }
+
+        /* Lantern (Patronage) */
+        .lantern-button {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            z-index: 50;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background: var(--amber-500);
+            color: white;
+            border: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+        .lantern-button:hover {
+            background: var(--amber-600);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
-        h1 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 2.5em;
+
+        .lantern-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
         }
-        
-        p {
-            margin-bottom: 15px;
-            font-size: 1.1em;
+
+        .lantern-panel {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            width: 20rem;
+            max-height: 24rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            display: none;
+            overflow: hidden;
         }
-        
-        .status {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
+
+        .lantern-panel.open {
+            display: flex;
+            flex-direction: column;
         }
-        
-        .links {
-            margin-top: 30px;
+
+        .lantern-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
-        .links a {
-            display: inline-block;
-            margin-right: 15px;
-            margin-bottom: 10px;
-            padding: 10px 20px;
-            background: #667eea;
+
+        .lantern-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 40;
+            display: none;
+        }
+
+        .backdrop.open {
+            display: block;
+        }
+
+        /* Candle (Feedback) */
+        .candle-button {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background: var(--indigo-500);
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
         }
-        
-        .links a:hover {
-            background: #5568d3;
+
+        .candle-button:hover {
+            background: var(--indigo-600);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .candle-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .candle-panel {
+            position: fixed;
+            bottom: 5rem;
+            right: 1.5rem;
+            width: 24rem;
+            max-height: 80vh;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+        }
+
+        .candle-panel.open {
+            display: flex;
+        }
+
+        .candle-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .candle-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: var(--slate-400);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .btn-close:hover {
+            color: var(--slate-600);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .lectures-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lantern-panel,
+            .candle-panel {
+                width: calc(100% - 3rem);
+                left: 1.5rem;
+                right: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Singh Inquiry Institute</h1>
-        <p>Welcome to the Singh Inquiry Institute project repository.</p>
-        
-        <div class="status">
-            <strong>Repository:</strong> singh.inquiry.institute<br>
-            <strong>Status:</strong> GitHub Pages configured and ready for deployment
+    <!-- Navigation Header -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-content">
+                <a href="/" class="nav-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2v4M12 18v4M8 6h8M8 18h8"/>
+                    </svg>
+                    <span>Singh Inquiry Institute</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#lectures" class="nav-link">Lectures</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="https://github.com/InquiryInstitute/singh.inquiry.institute" class="nav-link" target="_blank">GitHub</a>
+                    <a href="/support" class="nav-cta">Support</a>
+                </div>
+            </div>
         </div>
-        
-        <p>This site is powered by GitHub Pages. Content will be automatically deployed when changes are pushed to the main branch.</p>
-        
-        <div class="links">
-            <a href="https://github.com/InquiryInstitute/singh.inquiry.institute">View on GitHub</a>
-            <a href="./AWS_ROUTE53_SETUP.md">Route 53 Setup Guide</a>
-            <a href="./TODO.md">Project TODO</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Khan Academy Lectures</h1>
+        <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 2rem;">
+            Select lectures and assign faculty members to deliver them. Each lecture can be taught by a different aFaculty persona.
+        </p>
+
+        <!-- Lectures Section -->
+        <section class="lectures-section" id="lectures">
+            <h2>Available Lectures</h2>
+            <div class="lectures-grid" id="lecturesGrid">
+                <!-- Lectures will be populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Lantern (Patronage) -->
+    <button class="lantern-button" id="lanternBtn" aria-label="View patrons">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v4M12 18v4M8 6h8M8 18h8"/>
+            <rect x="6" y="6" width="12" height="12" rx="2"/>
+            <path d="M12 8v4M10 10h4"/>
+        </svg>
+    </button>
+
+    <div class="backdrop" id="lanternBackdrop"></div>
+    <div class="lantern-panel" id="lanternPanel">
+        <div class="lantern-header">
+            <h3 style="font-size: 1.125rem; font-weight: 600;">Patrons</h3>
+            <button class="btn-close" id="lanternClose">✕</button>
+        </div>
+        <div class="lantern-content">
+            <p style="text-align: center; color: var(--muted-foreground); padding: 2rem;">
+                No patrons yet. Be the first to support this project!
+            </p>
+            <a href="https://opencollective.com/inquiry-institute" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               style="display: block; text-align: center; padding: 0.75rem; background: var(--amber-500); color: white; border-radius: 0.5rem; text-decoration: none; font-weight: 600; margin-top: 1rem;">
+                Support this Work →
+            </a>
         </div>
     </div>
+
+    <!-- Candle (Feedback) -->
+    <button class="candle-button" id="candleBtn" aria-label="Provide feedback">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="10" y="18" width="4" height="4" rx="1"/>
+            <rect x="9" y="8" width="6" height="10" rx="1"/>
+            <path d="M12 4v4M11 6h2"/>
+            <circle cx="12" cy="6" r="1.5" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <div class="backdrop" id="candleBackdrop"></div>
+    <div class="candle-panel" id="candlePanel">
+        <div class="candle-header">
+            <h3 style="font-size: 1.125rem; font-weight: 600;">Feedback</h3>
+            <button class="btn-close" id="candleClose">✕</button>
+        </div>
+        <div class="candle-content">
+            <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 1rem;">
+                Page: <span id="currentPath">/</span>
+            </p>
+            <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem;">Create Feedback Issue</h4>
+                <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <div>
+                        <label style="display: block; font-size: 0.75rem; font-weight: 500; margin-bottom: 0.25rem;">Title</label>
+                        <input type="text" 
+                               id="feedbackTitle" 
+                               required
+                               style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 0.5rem; font-size: 0.875rem;"/>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.75rem; font-weight: 500; margin-bottom: 0.25rem;">Details (optional)</label>
+                        <textarea id="feedbackBody" 
+                                  rows="4"
+                                  style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 0.5rem; font-size: 0.875rem; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" 
+                            style="padding: 0.625rem; background: var(--indigo-600); color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+                        Create Issue on GitHub
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample lectures data (will be replaced with actual Khan Academy data)
+        const lectures = [
+            { id: 1, title: "Introduction to Algebra", subject: "Math", topic: "Algebra", duration: "10:30", youtubeId: "NybHckSEQBI" },
+            { id: 2, title: "Basic Geometry", subject: "Math", topic: "Geometry", duration: "15:45", youtubeId: "xZ6g1fX2Y7g" },
+            { id: 3, title: "World War I", subject: "History", topic: "World History", duration: "20:15", youtubeId: "_XPZQ0LAlR4" },
+            { id: 4, title: "Photosynthesis", subject: "Biology", topic: "Biology", duration: "12:20", youtubeId: "sQK3Yr4Sc_k" },
+            { id: 5, title: "Newton's Laws", subject: "Physics", topic: "Physics", duration: "18:30", youtubeId: "kKKM8Y-u7ds" },
+            { id: 6, title: "The Water Cycle", subject: "Earth Science", topic: "Earth Science", duration: "8:45", youtubeId: "al-do-HGuIk" },
+        ];
+
+        // Sample faculty (aFaculty personas)
+        const faculty = [
+            { id: "shelley", name: "Mary Shelley", expertise: ["Science", "Literature", "Philosophy"] },
+            { id: "darwin", name: "Charles Darwin", expertise: ["Biology", "Science", "Natural History"] },
+            { id: "einstein", name: "Albert Einstein", expertise: ["Physics", "Mathematics", "Philosophy"] },
+            { id: "curie", name: "Marie Curie", expertise: ["Physics", "Chemistry", "Science"] },
+            { id: "plato", name: "Plato", expertise: ["Philosophy", "Mathematics", "History"] },
+            { id: "tesla", name: "Nikola Tesla", expertise: ["Physics", "Engineering", "Mathematics"] },
+        ];
+
+        // Render lectures
+        function renderLectures() {
+            const grid = document.getElementById('lecturesGrid');
+            grid.innerHTML = lectures.map(lecture => `
+                <div class="lecture-card" data-lecture-id="${lecture.id}">
+                    <div class="lecture-title">${lecture.title}</div>
+                    <div class="lecture-meta">
+                        ${lecture.subject} • ${lecture.topic} • ${lecture.duration}
+                    </div>
+                    <div class="faculty-selector">
+                        <label>Select Faculty:</label>
+                        <select class="faculty-select" data-lecture-id="${lecture.id}">
+                            <option value="">-- Choose faculty --</option>
+                            ${faculty.map(f => `
+                                <option value="${f.id}">${f.name}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners
+            document.querySelectorAll('.faculty-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    const lectureId = parseInt(e.target.dataset.lectureId);
+                    const facultyId = e.target.value;
+                    const card = e.target.closest('.lecture-card');
+                    
+                    if (facultyId) {
+                        card.classList.add('selected');
+                        const selectedFaculty = faculty.find(f => f.id === facultyId);
+                        console.log(`Lecture "${lectures.find(l => l.id === lectureId).title}" assigned to ${selectedFaculty.name}`);
+                    } else {
+                        card.classList.remove('selected');
+                    }
+                });
+            });
+        }
+
+        // Lantern functionality
+        const lanternBtn = document.getElementById('lanternBtn');
+        const lanternPanel = document.getElementById('lanternPanel');
+        const lanternBackdrop = document.getElementById('lanternBackdrop');
+        const lanternClose = document.getElementById('lanternClose');
+
+        function toggleLantern() {
+            const isOpen = lanternPanel.classList.contains('open');
+            lanternPanel.classList.toggle('open');
+            lanternBackdrop.classList.toggle('open');
+        }
+
+        lanternBtn.addEventListener('click', toggleLantern);
+        lanternClose.addEventListener('click', toggleLantern);
+        lanternBackdrop.addEventListener('click', toggleLantern);
+
+        // Candle functionality
+        const candleBtn = document.getElementById('candleBtn');
+        const candlePanel = document.getElementById('candlePanel');
+        const candleBackdrop = document.getElementById('candleBackdrop');
+        const candleClose = document.getElementById('candleClose');
+        const feedbackForm = document.getElementById('feedbackForm');
+        const currentPath = document.getElementById('currentPath');
+
+        currentPath.textContent = window.location.pathname;
+
+        function toggleCandle() {
+            const isOpen = candlePanel.classList.contains('open');
+            candlePanel.classList.toggle('open');
+            candleBackdrop.classList.toggle('open');
+        }
+
+        candleBtn.addEventListener('click', toggleCandle);
+        candleClose.addEventListener('click', toggleCandle);
+        candleBackdrop.addEventListener('click', toggleCandle);
+
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('feedbackTitle').value;
+            const body = document.getElementById('feedbackBody').value;
+            const path = window.location.pathname;
+            
+            // Create GitHub issue URL
+            const issueTitle = encodeURIComponent(title);
+            const issueBody = encodeURIComponent(`Feedback for page: ${path}\n\n${body}`);
+            const issueUrl = `https://github.com/InquiryInstitute/singh.inquiry.institute/issues/new?title=${issueTitle}&body=${issueBody}&labels=feedback,user-reported`;
+            
+            window.open(issueUrl, '_blank');
+            feedbackForm.reset();
+            toggleCandle();
+        });
+
+        // Initialize
+        renderLectures();
+    </script>
 </body>
 </html>
