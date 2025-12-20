@@ -890,11 +890,11 @@
 
             try {
                 // Check if audio already generated
-                const audioUrl = localStorage.getItem(`audio-${lectureId}-${facultyId}`);
+                const cachedAudioUrl = localStorage.getItem(`audio-${lectureId}-${facultyId}`);
                 
-                if (audioUrl && audioUrl.startsWith('blob:')) {
+                if (cachedAudioUrl && cachedAudioUrl.startsWith('blob:')) {
                     // Use cached audio
-                    audioEl.src = audioUrl;
+                    audioEl.src = cachedAudioUrl;
                     audioEl.play();
                     playBtn.classList.add('playing');
                     playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
