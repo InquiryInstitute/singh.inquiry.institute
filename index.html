@@ -91,6 +91,7 @@
             align-items: center;
             justify-content: space-between;
             height: 4rem;
+            position: relative;
         }
 
         .nav-logo {
@@ -107,6 +108,24 @@
             width: 32px;
             height: 32px;
             object-fit: contain;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .logo-light {
+                display: none !important;
+            }
+            .logo-dark {
+                display: block !important;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .logo-light {
+                display: block !important;
+            }
+            .logo-dark {
+                display: none !important;
+            }
         }
 
         .nav-links {
@@ -423,17 +442,14 @@
         <div class="nav-container">
             <div class="nav-content">
                 <a href="/" class="nav-logo">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 2v4M12 18v4M8 6h8M8 18h8"/>
-                    </svg>
-                    <span>Singh Inquiry Institute</span>
+                    <img src="https://inquiry.institute/logo.png" alt="Inquiry Institute" width="32" height="32" class="logo-light" />
+                    <img src="https://inquiry.institute/logo-white.png" alt="Inquiry Institute" width="32" height="32" class="logo-dark" style="display: none;" />
+                    <span>Inquiry Institute</span>
                 </a>
                 <div class="nav-links">
-                    <a href="#lectures" class="nav-link">Lectures</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="https://github.com/InquiryInstitute/singh.inquiry.institute" class="nav-link" target="_blank">GitHub</a>
-                    <a href="/support" class="nav-cta">Support</a>
+                    <a href="https://inquiry.institute/start-here" class="nav-link">Start Here</a>
+                    <a href="https://inquiry.institute/about" class="nav-link">About</a>
+                    <a href="https://inquiry.institute/support" class="nav-cta">Support</a>
                 </div>
             </div>
         </div>
