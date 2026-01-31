@@ -356,9 +356,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     });
 
-    // Load course transcript - supports multiple videos
+    // Load course transcript - supports multiple videos and S3
     async function loadCourse(courseId) {
       try {
+        // Try S3 course loader first (if available)
+        try {
+          const { S3CourseLoader } = await import('/src/lib/s3-course-loader.js');
+          const loader = new S3CourseLoader({
+            bucket: 'singh-courses',
+            region: 'us-east-1'
+          });
+          
+          const transcript = await loader.getCourseTranscript(courseId);
+          if (transcript && transcript.segments && transcript.segments.length > 0) {
+            transcriptSegments = transcript.segments;
+            console.log(`Loaded ${transcriptSegments.length} segments from S3 for course ${courseId}`);
+            return transcript;
+          }
+        } catch (s3Error) {
+          console.log('S3 loader not available, falling back to local files:', s3Error);
+        }
+        
+        // Fallback: load from local metadata
         // First, load course metadata to get list of videos
         const metadataResponse = await fetch(`/data/metadata/${courseId}.json`);
         let courseMetadata = null;
@@ -940,8 +959,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     facultySelect.addEventListener('change', updateStartButton);
     startBtn.addEventListener('click', startDelivery);
 
+    // Load courses list
+    async function loadCourses() {
+      const courseSelect = document.getElementById('courseSelect');
+      if (!courseSelect) return;
+      
+      // Try S3 first
+      try {
+        const { S3CourseLoader } = await import('/src/lib/s3-course-loader.js');
+        const loader = new S3CourseLoader({
+          bucket: 'singh-courses',
+          region: 'us-east-1'
+        });
+        
+        const courses = await loader.listCourses({ source: 'khan-academy' });
+        if (courses && courses.length > 0) {
+          // Clear existing options except the first one
+          courseSelect.innerHTML = '<option value="">-- Select a Course --</option>';
+          
+          courses.forEach(course => {
+            const option = document.createElement('option');
+            option.value = course.course_id;
+            option.textContent = `${course.title}${course.subject ? ` (${course.subject})` : ''}`;
+            courseSelect.appendChild(option);
+          });
+          
+          console.log(`Loaded ${courses.length} courses from S3`);
+          return;
+        }
+      } catch (s3Error) {
+        console.log('S3 course loading failed, using local courses:', s3Error);
+      }
+      
+      // Fallback: keep existing local courses
+      // The default option is already in the HTML
+    }
+
+    // Refresh courses button
+    const refreshCoursesBtn = document.getElementById('refreshCoursesBtn');
+    if (refreshCoursesBtn) {
+      refreshCoursesBtn.addEventListener('click', async () => {
+        refreshCoursesBtn.textContent = 'Loading...';
+        refreshCoursesBtn.disabled = true;
+        await loadCourses();
+        refreshCoursesBtn.textContent = '↻ Refresh Course List';
+        refreshCoursesBtn.disabled = false;
+      });
+    }
+
     // Initialize
     loadFaculty();
+    loadCourses();
     updateStartButton();
   </script>
 </BaseLayout>
