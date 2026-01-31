@@ -206,7 +206,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           }
         }
       } catch (error) {
-        console.warn('Failed to fetch portrait from Supabase:', error);
+        // Silently fail - we'll use GCS fallback
+        // Only log if it's not a network error (which is expected in some environments)
+        if (!error.message?.includes('Failed to fetch') && !error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+          console.warn('Failed to fetch portrait from Supabase:', error);
+        }
       }
 
       // Fallback: try GCS
