@@ -780,12 +780,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           
           // Log the source for debugging
           console.log('Response source:', response?.source || 'generated');
+          console.log('Current delivery state:', {
+            isDelivering: dialogic.deliveryEngine?.isDelivering,
+            isPaused: dialogic.deliveryEngine?.isPaused,
+            currentIndex: dialogic.deliveryEngine?.currentIndex,
+            totalSegments: dialogic.deliveryEngine?.segments?.length
+          });
           
           // Resume delivery after delay
           if (dialogic.deliveryEngine) {
             const delay = response?.source === 'fallback' || response?.source === 'contextual-fallback' ? 3000 : 2000;
+            console.log(`Resuming delivery in ${delay}ms...`);
             setTimeout(() => {
-              dialogic.deliveryEngine.resume();
+              if (dialogic.deliveryEngine) {
+                console.log('Attempting to resume delivery...');
+                dialogic.deliveryEngine.resume();
+              }
             }, delay);
           }
         } catch (error) {
