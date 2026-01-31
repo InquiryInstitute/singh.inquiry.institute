@@ -155,6 +155,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     let currentCourse = null;
     let currentFaculty = null;
     let transcriptSegments = [];
+    let conversationHistory = []; // Store conversation history for context
 
     // DOM Elements
     const courseSelect = document.getElementById('courseSelect');
@@ -580,7 +581,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
-      
+
+      // Add to conversation history for API context
+      if (type === 'user' || type === 'faculty') {
+        conversationHistory.push({
+          role: type === 'user' ? 'user' : 'assistant',
+          content: text,
+          sender: sender,
+          messageId: messageId
+        });
+        // Keep history to last 20 messages to avoid token limits
+        if (conversationHistory.length > 20) {
+          conversationHistory = conversationHistory.slice(-20);
+        }
+      }
+
       return messageDiv; // Return for potential removal
     }
 
@@ -799,12 +814,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'apikey': SUPABASE_ANON_KEY  // Supabase requires both
               },
               body: JSON.stringify({
                 faculty_id: currentFaculty,
-                message: question,  // Use 'message' not 'question'
-                conversation_history: [],
+                message: question,  // ask-faculty expects 'message' not 'question'
+                conversation_history: (conversationHistory || []).map(msg => ({
+                  role: msg.role || (msg.sender ? 'assistant' : 'user'),
+                  content: msg.content || msg.text || ''
+                })),
                 context: 'office_hours'  // Use office_hours context for Q&A
               })
             });
