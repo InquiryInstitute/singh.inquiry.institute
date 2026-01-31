@@ -1,0 +1,2074 @@
+{
+  "class_id": "algebra-basics-intro",
+  "video_id": "NybHckSEQBI",
+  "title": "Algebra Basics: What Is Algebra? - Math Antics",
+  "segments": [
+    {
+      "segment_id": 1,
+      "text": "Hi! This is Rob. Welcome to Math Antics.",
+      "start_time": 6,
+      "end_time": 9,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "introduction"
+    },
+    {
+      "segment_id": 2,
+      "text": "In this lesson, we're going to learn some really important things",
+      "start_time": 9,
+      "end_time": 12,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 3,
+      "text": "about a whole branch of math called Algebra.",
+      "start_time": 12,
+      "end_time": 15,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 4,
+      "text": "The first thing you need to know is that Algebra is a lot like arithmetic.",
+      "start_time": 15,
+      "end_time": 19,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 5,
+      "text": "It follows all the rules of arithmetic",
+      "start_time": 19,
+      "end_time": 22,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 6,
+      "text": "and it uses the same four main operations that arithmetic is built on:",
+      "start_time": 22,
+      "end_time": 26,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 7,
+      "text": "addition, subtraction, multiplication and division.",
+      "start_time": 26,
+      "end_time": 30,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 8,
+      "text": "But Algebra introduces a new element...",
+      "start_time": 30,
+      "end_time": 33,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 9,
+      "text": "the element of the unknown.",
+      "start_time": 33,
+      "end_time": 35,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 10,
+      "text": "When you were learning arithmetic,",
+      "start_time": 35,
+      "end_time": 37,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 11,
+      "text": "the only thing that was ever unknown was the answer to the problem.",
+      "start_time": 37,
+      "end_time": 41,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 12,
+      "text": "For example, you might have the problem 1 + 2 = what?",
+      "start_time": 41,
+      "end_time": 46,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 13,
+      "text": "The answer isn't known until you go ahead and do the arithmetic.",
+      "start_time": 46,
+      "end_time": 50,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 14,
+      "text": "Now the important thing about Algebra is that when we don't know what a number is yet,",
+      "start_time": 50,
+      "end_time": 54,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 15,
+      "text": "we use a symbol in its place.",
+      "start_time": 54,
+      "end_time": 56,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 16,
+      "text": "that symbol is usually just any letter of the alphabet.",
+      "start_time": 56,
+      "end_time": 59,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 17,
+      "text": "A really popular letter to choose is the letter 'x'.",
+      "start_time": 59,
+      "end_time": 63,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 18,
+      "text": "So in arithmetic, we would just leave the problem like this: 1 + 2 = \"blank\"",
+      "start_time": 63,
+      "end_time": 69,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 19,
+      "text": "and we'd write in the answer when we did the addition.",
+      "start_time": 69,
+      "end_time": 72,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 20,
+      "text": "But in Algebra, we'd write it like this: 1 + 2 = x",
+      "start_time": 72,
+      "end_time": 77,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 21,
+      "text": "The 'x' is a place holder that stands for the number that we don't know yet.",
+      "start_time": 77,
+      "end_time": 81,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 22,
+      "text": "What we have here is a very basic algebraic equation.",
+      "start_time": 81,
+      "end_time": 86,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 23,
+      "text": "An equation is just a mathematical statement that two things are equal.",
+      "start_time": 86,
+      "end_time": 91,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 24,
+      "text": "An equation says, \"the things on this side of the equal sign",
+      "start_time": 91,
+      "end_time": 94,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 25,
+      "text": "have the same value as the things on the other side of the equal sign.\"",
+      "start_time": 94,
+      "end_time": 97,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 26,
+      "text": "In this case, our equation is telling us that the known values on this side (1+2)",
+      "start_time": 97,
+      "end_time": 103,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 27,
+      "text": "are equal to what's on the other side,",
+      "start_time": 103,
+      "end_time": 105,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 28,
+      "text": "which happens to be the unknown value that we are calling 'x'.",
+      "start_time": 105,
+      "end_time": 109,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 29,
+      "text": "One of the main goals in Algebra",
+      "start_time": 109,
+      "end_time": 110,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 30,
+      "text": "is to figure out what the unknown values in equations are.",
+      "start_time": 110,
+      "end_time": 113,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 31,
+      "text": "And when you do that, it's called \"solving the equations\".",
+      "start_time": 113,
+      "end_time": 117,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 32,
+      "text": "In this equation, it's pretty easy to see that the unknown value is just 3.",
+      "start_time": 117,
+      "end_time": 122,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 33,
+      "text": "All you have to do is actually add the 1 and 2 together on this side of the equation",
+      "start_time": 122,
+      "end_time": 126,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 34,
+      "text": "and it turns into 3 = x, which is the same as x = 3.",
+      "start_time": 126,
+      "end_time": 131,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 35,
+      "text": "So now we know what 'x' is! It's just 3.",
+      "start_time": 131,
+      "end_time": 134,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 36,
+      "text": "That almost seems too easy, doesn’t it?",
+      "start_time": 134,
+      "end_time": 137,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 37,
+      "text": "And that's why in Algebra, you are usually given an equation in a more complicated form",
+      "start_time": 137,
+      "end_time": 141,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "summary"
+    },
+    {
+      "segment_id": 38,
+      "text": "like this: x - 2 = 1.",
+      "start_time": 141,
+      "end_time": 144,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 39,
+      "text": "This is exactly the same equation as 1 + 2 = x,",
+      "start_time": 144,
+      "end_time": 148,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 40,
+      "text": "but it has been rearranged so that it's not quite as easy to tell what 'x' is.",
+      "start_time": 148,
+      "end_time": 153,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 41,
+      "text": "So in Algebra, solving equations is a lot like a game",
+      "start_time": 153,
+      "end_time": 156,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 42,
+      "text": "where you are given mixed-up, complicated equations,",
+      "start_time": 156,
+      "end_time": 159,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 43,
+      "text": "and it's your job to simplify them and rearrange them",
+      "start_time": 159,
+      "end_time": 162,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 44,
+      "text": "until it is a nice simple equation (like x = 3)",
+      "start_time": 162,
+      "end_time": 165,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 45,
+      "text": "where it's easy to tell what the unknown values are.",
+      "start_time": 165,
+      "end_time": 168,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 46,
+      "text": "We're going to learn a lot more about",
+      "start_time": 168,
+      "end_time": 170,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 47,
+      "text": "how you actually do that (how you solve equations)",
+      "start_time": 170,
+      "end_time": 172,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 48,
+      "text": "in the next several videos,",
+      "start_time": 172,
+      "end_time": 174,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 49,
+      "text": "but for now, let's learn some important rules about",
+      "start_time": 174,
+      "end_time": 176,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 50,
+      "text": "how symbols can and can't be used in algebraic equations.",
+      "start_time": 176,
+      "end_time": 180,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 51,
+      "text": "The first rule you need to know is that the same symbol (or letter)",
+      "start_time": 180,
+      "end_time": 184,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 52,
+      "text": "can be used in different algebra problems to stand for different unknown values.",
+      "start_time": 184,
+      "end_time": 189,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 53,
+      "text": "For example, in the problem we just solved,",
+      "start_time": 189,
+      "end_time": 191,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 54,
+      "text": "the letter 'x' was used to stand for the number 3, right?",
+      "start_time": 191,
+      "end_time": 194,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 55,
+      "text": "But 'x' could stand for a different number in a different problem.",
+      "start_time": 194,
+      "end_time": 198,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 56,
+      "text": "Like, if someone asks us to solve the equation, 5 + x = 10.",
+      "start_time": 198,
+      "end_time": 202,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 57,
+      "text": "In order for the two sides of this equation to be equal,",
+      "start_time": 202,
+      "end_time": 205,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 58,
+      "text": "'x' must have the value '5' in this problem, because 5 + 5 = 10.",
+      "start_time": 205,
+      "end_time": 211,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 59,
+      "text": "So 'x' (or any other symbol) can stand for different values in different problems.",
+      "start_time": 211,
+      "end_time": 216,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 60,
+      "text": "That's okay,",
+      "start_time": 216,
+      "end_time": 217,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "summary"
+    },
+    {
+      "segment_id": 61,
+      "text": "but what's NOT okay is for a symbol",
+      "start_time": 217,
+      "end_time": 219,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 62,
+      "text": "to stand for different values in the same problem at the same time!",
+      "start_time": 219,
+      "end_time": 223,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 63,
+      "text": "For example, what if you had the equation: x + x = 10?",
+      "start_time": 223,
+      "end_time": 228,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 64,
+      "text": "This equation says that if we add 'x' to 'x' we will get 10.",
+      "start_time": 228,
+      "end_time": 232,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 65,
+      "text": "And there are a lot of different numbers we could add together to get 10, like 6 and 4.",
+      "start_time": 232,
+      "end_time": 237,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 66,
+      "text": "But, if we had the first 'x' stand for 6 and the second 'x' stand for 4,",
+      "start_time": 237,
+      "end_time": 242,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 67,
+      "text": "then 'x' would stand for two different value at the same time",
+      "start_time": 242,
+      "end_time": 245,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 68,
+      "text": "and things could get really confusing!",
+      "start_time": 245,
+      "end_time": 248,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 69,
+      "text": "If you wanted symbols to stand for two different numbers at the same time,",
+      "start_time": 248,
+      "end_time": 252,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 70,
+      "text": "you would need to use two different symbols, like 'x' and 'y'.",
+      "start_time": 252,
+      "end_time": 256,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 71,
+      "text": "So in Algebra, whenever you see the same symbol repeated more than once in an equation,",
+      "start_time": 256,
+      "end_time": 261,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 72,
+      "text": "it's representing the same unknown value.",
+      "start_time": 261,
+      "end_time": 264,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 73,
+      "text": "Like if you see a really complicated Algebraic equation (like this),",
+      "start_time": 264,
+      "end_time": 268,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 74,
+      "text": "where 'x' is repeated a lot of different times,",
+      "start_time": 268,
+      "end_time": 271,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 75,
+      "text": "all of those 'x's stand for the same value,",
+      "start_time": 271,
+      "end_time": 274,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 76,
+      "text": "and it will be your job to figure out what that value is.",
+      "start_time": 274,
+      "end_time": 278,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 77,
+      "text": "Okay, so for any particular equation,",
+      "start_time": 278,
+      "end_time": 281,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 78,
+      "text": "we can't use the same letter to represent two different numbers at the same time,",
+      "start_time": 281,
+      "end_time": 286,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 79,
+      "text": "but what about the other way around?",
+      "start_time": 286,
+      "end_time": 287,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 80,
+      "text": "Could we use two different letters to represent the same number?",
+      "start_time": 287,
+      "end_time": 291,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 81,
+      "text": "Yes! - Here's an example of that.",
+      "start_time": 291,
+      "end_time": 294,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 82,
+      "text": "Let's say you have the equation: a + b = 2",
+      "start_time": 294,
+      "end_time": 298,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 83,
+      "text": "What could 'a' and 'b' stand for so that the equation is true?",
+      "start_time": 298,
+      "end_time": 302,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 84,
+      "text": "Well, If 'a' was 0 and 'b' was 2, then the equation would be true.",
+      "start_time": 302,
+      "end_time": 307,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 85,
+      "text": "Or, we could switch them around.",
+      "start_time": 307,
+      "end_time": 309,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 86,
+      "text": "If 'a' was 2 and 'b' was 0, the equation would also be true.",
+      "start_time": 309,
+      "end_time": 313,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 87,
+      "text": "But there's another possibility:",
+      "start_time": 313,
+      "end_time": 315,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 88,
+      "text": "If 'a' was 1 and 'b' was also 1, that would make the equation true, right?",
+      "start_time": 315,
+      "end_time": 320,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 89,
+      "text": "So, even though 'a' and 'b' are different symbols,",
+      "start_time": 320,
+      "end_time": 323,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 90,
+      "text": "and would usually be used to represent different numbers,",
+      "start_time": 323,
+      "end_time": 326,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 91,
+      "text": "there are times when they might happen to represent the same number.",
+      "start_time": 326,
+      "end_time": 330,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 92,
+      "text": "Oh, and this problem can help us understand something",
+      "start_time": 330,
+      "end_time": 333,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 93,
+      "text": "very important about how symbols are used in Algebra.",
+      "start_time": 333,
+      "end_time": 336,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 94,
+      "text": "Did you notice that there were different possible solution for this equation?",
+      "start_time": 336,
+      "end_time": 340,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 95,
+      "text": "In other words, 'b' could have the value 0, 1, or 2 depending on what the value of 'a' was.",
+      "start_time": 340,
+      "end_time": 347,
+      "duration": 6,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 96,
+      "text": "If 'a' is 0 then 'b' must be 2",
+      "start_time": 347,
+      "end_time": 350,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 97,
+      "text": "If 'a' is 1 then 'b' must be 1",
+      "start_time": 350,
+      "end_time": 353,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 98,
+      "text": "If 'a' is 2 then 'b' must be 0",
+      "start_time": 353,
+      "end_time": 356,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 99,
+      "text": "'b' can't have two different values at the same time,",
+      "start_time": 356,
+      "end_time": 359,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 100,
+      "text": "but it's value can change over time if the value of 'a' changes.",
+      "start_time": 359,
+      "end_time": 363,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 101,
+      "text": "In Algebra, 'b' is what's called a \"variable\" because it's value can 'vary' or change.",
+      "start_time": 363,
+      "end_time": 368,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 102,
+      "text": "In fact, in this equation, both 'a' and 'b' are variables",
+      "start_time": 368,
+      "end_time": 371,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 103,
+      "text": "because their values will change depending on the value of each other.",
+      "start_time": 371,
+      "end_time": 376,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 104,
+      "text": "Actually, it's really common in Algebra to refer to any letter as a variable,",
+      "start_time": 376,
+      "end_time": 380,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 105,
+      "text": "since letters can stand for different values in different problems.",
+      "start_time": 380,
+      "end_time": 384,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 106,
+      "text": "But at Math Antics, we'll usually just use the word \"variable\"",
+      "start_time": 384,
+      "end_time": 387,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 107,
+      "text": "when we're talking about values that can change or vary in the same problem.",
+      "start_time": 387,
+      "end_time": 392,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 108,
+      "text": "Alright, so far we've learned that Algebra is a lot like arithmetic,",
+      "start_time": 392,
+      "end_time": 396,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 109,
+      "text": "but that in includes unknown values and variables that we can solve for in equations.",
+      "start_time": 396,
+      "end_time": 401,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 110,
+      "text": "There's one other really important thing that I want to teach you",
+      "start_time": 401,
+      "end_time": 405,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 111,
+      "text": "that will help you understand what's going on in a lot of Algebra problems,",
+      "start_time": 405,
+      "end_time": 409,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 112,
+      "text": "and it has to do with multiplication.",
+      "start_time": 409,
+      "end_time": 412,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 113,
+      "text": "Here are the four basic arithmetic operations:",
+      "start_time": 412,
+      "end_time": 415,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 114,
+      "text": "addition, subtraction, multiplication and division.",
+      "start_time": 415,
+      "end_time": 418,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 115,
+      "text": "Although in Algebra, you'll usually see division written in fraction form, like this.",
+      "start_time": 418,
+      "end_time": 423,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 116,
+      "text": "In Arithmetic, all four operations have the same status,",
+      "start_time": 423,
+      "end_time": 427,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 117,
+      "text": "but in Algebra, multiplication get's some special treatment.",
+      "start_time": 427,
+      "end_time": 431,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 118,
+      "text": "In Algebra, multiplication is the 'default' operation.",
+      "start_time": 431,
+      "end_time": 435,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 119,
+      "text": "That means, if no other arithmetic operation is shown between two symbols,",
+      "start_time": 435,
+      "end_time": 440,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 120,
+      "text": "then you can just assume they're being multiplied. The multiplication is 'implied'.",
+      "start_time": 440,
+      "end_time": 446,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 121,
+      "text": "For example, instead of writing 'a' times 'b',",
+      "start_time": 446,
+      "end_time": 449,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 122,
+      "text": "you can leave out the times symbol and just write 'ab'.",
+      "start_time": 449,
+      "end_time": 452,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 123,
+      "text": "Since no operation is shown between these two symbols,",
+      "start_time": 452,
+      "end_time": 455,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 124,
+      "text": "you know that you're supposed to multiply 'a' and 'b'.",
+      "start_time": 455,
+      "end_time": 458,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 125,
+      "text": "Of course, you can't actually multiply 'a' and 'b'",
+      "start_time": 458,
+      "end_time": 461,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 126,
+      "text": "until you figure out what numbers they stand for.",
+      "start_time": 461,
+      "end_time": 464,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 127,
+      "text": "The advantage of this rule about multiplication is that",
+      "start_time": 464,
+      "end_time": 467,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 128,
+      "text": "it makes many algebraic equations less cluttered and easier to write down.",
+      "start_time": 467,
+      "end_time": 471,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 129,
+      "text": "For example, instead of this: a * b + c * d = 10",
+      "start_time": 471,
+      "end_time": 477,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 130,
+      "text": "You could just write: ab + cd = 10.",
+      "start_time": 477,
+      "end_time": 482,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 131,
+      "text": "You can also use this shorthand when you are multiplying",
+      "start_time": 482,
+      "end_time": 484,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 132,
+      "text": "a variable and a known number... like 2x, which means the same thing as 2 times 'x'",
+      "start_time": 484,
+      "end_time": 490,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 133,
+      "text": "or 3y which means the same thing as 3 times 'y'",
+      "start_time": 490,
+      "end_time": 494,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 134,
+      "text": "Since the symbol and the number are right next to each other,",
+      "start_time": 494,
+      "end_time": 497,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 135,
+      "text": "the multiplication is implied.",
+      "start_time": 497,
+      "end_time": 499,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 136,
+      "text": "You don't have to write it down.",
+      "start_time": 499,
+      "end_time": 501,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 137,
+      "text": "Finally some good news!",
+      "start_time": 501,
+      "end_time": 503,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 138,
+      "text": "Now I never have to write down that pesky multiplication symbol again!",
+      "start_time": 503,
+      "end_time": 507,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 139,
+      "text": "Oh yeah!!",
+      "start_time": 507,
+      "end_time": 508,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 140,
+      "text": "Ah, not so fast...",
+      "start_time": 508,
+      "end_time": 510,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 141,
+      "text": "there are some cases in Algebra where still need to use a multiplication symbol.",
+      "start_time": 510,
+      "end_time": 515,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 142,
+      "text": "For example, what if you want to show 2 x 5?",
+      "start_time": 515,
+      "end_time": 518,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 143,
+      "text": "If you just get rid of the times symbol and put the '2' right next to the '5',",
+      "start_time": 518,
+      "end_time": 522,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 144,
+      "text": "it's going to look like the two-digit number twenty-five,",
+      "start_time": 522,
+      "end_time": 525,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 145,
+      "text": "which is NOT the same as 2 x 5.",
+      "start_time": 525,
+      "end_time": 528,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 146,
+      "text": "So, whenever you need to show multiplication between two known numbers,",
+      "start_time": 528,
+      "end_time": 532,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 147,
+      "text": "you still have to use the times symbol, unless...",
+      "start_time": 532,
+      "end_time": 535,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 148,
+      "text": "you use parentheses instead.",
+      "start_time": 535,
+      "end_time": 537,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 149,
+      "text": "But aren't parentheses used to show grouping in math?",
+      "start_time": 537,
+      "end_time": 540,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 150,
+      "text": "How can you use that to show multiplication?",
+      "start_time": 540,
+      "end_time": 543,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 151,
+      "text": "Ah, that's a good question.",
+      "start_time": 543,
+      "end_time": 545,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "summary"
+    },
+    {
+      "segment_id": 152,
+      "text": "Parentheses are used to group things,",
+      "start_time": 545,
+      "end_time": 547,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 153,
+      "text": "but whenever you put two groups right next to each other,",
+      "start_time": 548,
+      "end_time": 550,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 154,
+      "text": "with no operation between them,",
+      "start_time": 550,
+      "end_time": 552,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 155,
+      "text": "guess what operation is implied.",
+      "start_time": 552,
+      "end_time": 554,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 156,
+      "text": "Yep! Multiplication!",
+      "start_time": 554,
+      "end_time": 557,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 157,
+      "text": "For example, if you see the this,",
+      "start_time": 557,
+      "end_time": 559,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 158,
+      "text": "it means that the group (a+b) is being multiplied by the group (x+y).",
+      "start_time": 559,
+      "end_time": 564,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 159,
+      "text": "We could put a times symbol between the groups, but we don't have to",
+      "start_time": 564,
+      "end_time": 567,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 160,
+      "text": "because it's the default operation in Algebra.",
+      "start_time": 567,
+      "end_time": 570,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 161,
+      "text": "The multiplication is just implied.",
+      "start_time": 570,
+      "end_time": 572,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 162,
+      "text": "So, going back to our problem: 2 x 5",
+      "start_time": 572,
+      "end_time": 576,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 163,
+      "text": "If you wanted to, you could put each of the numbers inside parentheses like this,",
+      "start_time": 576,
+      "end_time": 580,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 164,
+      "text": "and then you could get rid of the multiplication sign.",
+      "start_time": 580,
+      "end_time": 583,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 165,
+      "text": "Now this can't be confused with the number twenty-five,",
+      "start_time": 583,
+      "end_time": 586,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 166,
+      "text": "and since the groups are right next to each other,",
+      "start_time": 586,
+      "end_time": 588,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 167,
+      "text": "you know that you need to multiply them.",
+      "start_time": 588,
+      "end_time": 591,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 168,
+      "text": "Of course, it might seem strange to have just one thing inside 'group' symbols like this,",
+      "start_time": 591,
+      "end_time": 596,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 169,
+      "text": "but it's okay to do that in math.",
+      "start_time": 596,
+      "end_time": 598,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 170,
+      "text": "An alternate way that you could do the same thing would be",
+      "start_time": 598,
+      "end_time": 600,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 171,
+      "text": "to put just one of the numbers in parentheses, like this.",
+      "start_time": 600,
+      "end_time": 604,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 172,
+      "text": "Again, you won't confuse this with a two-digit number",
+      "start_time": 604,
+      "end_time": 607,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 173,
+      "text": "and you know that multiplication is implied.",
+      "start_time": 607,
+      "end_time": 610,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 174,
+      "text": "Okay, so we've learned that Algebra is a lot like arithmetic,",
+      "start_time": 610,
+      "end_time": 613,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 175,
+      "text": "but it involves unknown values or variables that we need to solve for.",
+      "start_time": 613,
+      "end_time": 618,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 176,
+      "text": "And we learned that in Algebra, the multiplication sign is usually not shown,",
+      "start_time": 618,
+      "end_time": 622,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 177,
+      "text": "because it's the default operation.",
+      "start_time": 622,
+      "end_time": 624,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 178,
+      "text": "You can just assume that two things right next to each other are being multiplied.",
+      "start_time": 624,
+      "end_time": 629,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 179,
+      "text": "But why do we even care about Algebra?",
+      "start_time": 629,
+      "end_time": 631,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 180,
+      "text": "Is it good for anything in the 'real world'?",
+      "start_time": 631,
+      "end_time": 633,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 181,
+      "text": "or is it just a bunch of tricky problems that keep students busy in school?",
+      "start_time": 633,
+      "end_time": 638,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 182,
+      "text": "Actually, Algebra is very useful for describing or \"modeling\" things in the real world.",
+      "start_time": 638,
+      "end_time": 643,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 183,
+      "text": "It's a little hard to see that when you are just looking",
+      "start_time": 643,
+      "end_time": 645,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 184,
+      "text": "at all these numbers and symbols on the page of a math book.",
+      "start_time": 645,
+      "end_time": 649,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 185,
+      "text": "But, it's a lot easier to see",
+      "start_time": 649,
+      "end_time": 651,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 186,
+      "text": "when you start taking algebraic equations and graphing their solutions.",
+      "start_time": 651,
+      "end_time": 655,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 187,
+      "text": "Graphing an equation is like using its different solutions",
+      "start_time": 655,
+      "end_time": 659,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 188,
+      "text": "to draw simple lines and curves that can be used to describe and predict things in real life.",
+      "start_time": 659,
+      "end_time": 665,
+      "duration": 5,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 189,
+      "text": "For example, there's a whole class of equations in Algebra",
+      "start_time": 665,
+      "end_time": 668,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 190,
+      "text": "called \"linear\" equations because they form straight lines when you graph them.",
+      "start_time": 668,
+      "end_time": 672,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 191,
+      "text": "Those sorts of equations could help you describe the slope of a roof",
+      "start_time": 672,
+      "end_time": 676,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 192,
+      "text": "or tell you how long it will take to get somewhere.",
+      "start_time": 676,
+      "end_time": 679,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 193,
+      "text": "Another class of algebraic equations, called \"quadratic\" equations",
+      "start_time": 679,
+      "end_time": 684,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 194,
+      "text": "can be used to design telescope lenses,",
+      "start_time": 684,
+      "end_time": 686,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 195,
+      "text": "or describe how a ball flies through the air,",
+      "start_time": 686,
+      "end_time": 689,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 196,
+      "text": "or predict the growth of a population.",
+      "start_time": 689,
+      "end_time": 692,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 197,
+      "text": "So Algebra is used all the time in fields like",
+      "start_time": 692,
+      "end_time": 694,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 198,
+      "text": "science, engineering, economics and computer programming.",
+      "start_time": 695,
+      "end_time": 699,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 199,
+      "text": "And even though you might not need Algebra to get by in your day to day life,...",
+      "start_time": 699,
+      "end_time": 703,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 200,
+      "text": "...so divide both sides by 3. That means x = 42.",
+      "start_time": 703,
+      "end_time": 708,
+      "duration": 4,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 201,
+      "text": "So... in three... two... one...",
+      "start_time": 708,
+      "end_time": 712,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 202,
+      "text": "YES!!",
+      "start_time": 712,
+      "end_time": 713,
+      "duration": 1,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 203,
+      "text": "Alright... now to see how much butter I need.",
+      "start_time": 713,
+      "end_time": 715,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 204,
+      "text": "It's still a very useful part of math.",
+      "start_time": 716,
+      "end_time": 718,
+      "duration": 2,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 205,
+      "text": "Thanks for watching Math Antics,",
+      "start_time": 718,
+      "end_time": 721,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    },
+    {
+      "segment_id": 206,
+      "text": "Learn more at www.mathantics.com",
+      "start_time": 722,
+      "end_time": 725,
+      "duration": 3,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": null
+    }
+  ],
+  "total_segments": 206,
+  "total_duration": 615,
+  "metadata": {
+    "source": "khan-academy",
+    "created": "2025-01-20",
+    "format_version": "1.0"
+  }
+}
