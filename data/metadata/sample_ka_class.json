@@ -11,6 +11,20 @@
       "youtube_id": "NybHckSEQBI",
       "duration": 600,
       "order": 1
+    },
+    {
+      "video_id": "sample-video-2",
+      "title": "Working with equations",
+      "youtube_id": "sample-video-2",
+      "duration": 720,
+      "order": 2
+    },
+    {
+      "video_id": "sample-video-3",
+      "title": "Solving for unknown values",
+      "youtube_id": "sample-video-3",
+      "duration": 900,
+      "order": 3
     }
   ],
   "faculty_suggestions": [

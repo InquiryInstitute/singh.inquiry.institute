@@ -1,0 +1,94 @@
+{
+  "class_id": "algebra-basics-intro",
+  "video_id": "sample-video-3",
+  "title": "Solving for unknown values",
+  "segments": [
+    {
+      "segment_id": 1,
+      "text": "Now we'll practice solving more complex equations with multiple steps.",
+      "start_time": 0,
+      "end_time": 7,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "complex-equations"
+    },
+    {
+      "segment_id": 2,
+      "text": "Consider the equation 3x minus 5 equals 2x plus 7. We have variables on both sides.",
+      "start_time": 7,
+      "end_time": 16,
+      "duration": 9,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "both-sides"
+    },
+    {
+      "segment_id": 3,
+      "text": "First, we need to get all the variable terms on one side. Let's subtract 2x from both sides.",
+      "start_time": 16,
+      "end_time": 24,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "isolate-variable"
+    },
+    {
+      "segment_id": 4,
+      "text": "This gives us x minus 5 equals 7. Now add 5 to both sides to get x equals 12.",
+      "start_time": 24,
+      "end_time": 32,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "solution"
+    },
+    {
+      "segment_id": 5,
+      "text": "Always verify your solution by substituting it back into the original equation.",
+      "start_time": 32,
+      "end_time": 39,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "verification-reminder"
+    },
+    {
+      "segment_id": 6,
+      "text": "3 times 12 minus 5 equals 36 minus 5, which is 31. And 2 times 12 plus 7 equals 24 plus 7, which is also 31. Perfect!",
+      "start_time": 39,
+      "end_time": 50,
+      "duration": 11,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "verification-example"
+    },
+    {
+      "segment_id": 7,
+      "text": "This method works for any linear equation. The key is to use inverse operations systematically.",
+      "start_time": 50,
+      "end_time": 58,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "method-summary"
+    },
+    {
+      "segment_id": 8,
+      "text": "You now have the tools to solve equations! Practice with different problems to build your confidence.",
+      "start_time": 58,
+      "end_time": 65,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "conclusion"
+    }
+  ],
+  "total_segments": 8,
+  "total_duration": 65,
+  "metadata": {
+    "source": "sample",
+    "created": "2025-01-20",
+    "format_version": "1.0"
+  }
+}

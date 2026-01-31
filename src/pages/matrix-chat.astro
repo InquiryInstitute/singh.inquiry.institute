@@ -350,14 +350,94 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     });
 
-    // Load course transcript
+    // Load course transcript - supports multiple videos
     async function loadCourse(courseId) {
       try {
+        // First, load course metadata to get list of videos
+        const metadataResponse = await fetch(`/data/metadata/${courseId}.json`);
+        let courseMetadata = null;
+        if (metadataResponse.ok) {
+          courseMetadata = await metadataResponse.json();
+          console.log('Loaded course metadata:', courseMetadata);
+        }
+        
+        // If course has multiple videos, load all of them
+        if (courseMetadata && courseMetadata.videos && courseMetadata.videos.length > 0) {
+          const allSegments = [];
+          let segmentIdCounter = 1;
+          
+          for (const video of courseMetadata.videos) {
+            try {
+              // Try to load transcript for this video
+              // Try multiple naming patterns: video_id_dialogic_transcript.json, youtube_id_dialogic_transcript.json, or sample_dialogic_transcript.json for first video
+              const videoId = video.video_id || video.youtube_id;
+              let transcriptResponse = null;
+              let transcriptId = null;
+              
+              // Try different file name patterns
+              const possibleNames = [
+                `${videoId}_dialogic_transcript.json`,
+                `sample-video-${video.order}_dialogic_transcript.json`,
+                video.order === 1 ? 'sample_dialogic_transcript.json' : null
+              ].filter(Boolean);
+              
+              for (const fileName of possibleNames) {
+                transcriptResponse = await fetch(`/data/transcripts/processed/${fileName}`);
+                if (transcriptResponse.ok) {
+                  transcriptId = fileName;
+                  break;
+                }
+              }
+              
+              if (transcriptResponse && transcriptResponse.ok) {
+                const videoTranscript = await transcriptResponse.json();
+                console.log(`Loaded transcript for video ${video.order}: ${video.title} (${transcriptId})`, videoTranscript.segments?.length || 0, 'segments');
+                
+                // Add video title as a transition marker if not first video
+                if (allSegments.length > 0 && videoTranscript.segments && videoTranscript.segments.length > 0) {
+                  allSegments.push({
+                    segment_id: segmentIdCounter++,
+                    text: `Now let's move on to: ${video.title}`,
+                    allows_questions: true,
+                    pause_duration: 2000,
+                    topic_marker: `video-${video.order}`,
+                    is_transition: true
+                  });
+                }
+                
+                // Add all segments from this video, renumbering segment_ids
+                if (videoTranscript.segments) {
+                  videoTranscript.segments.forEach(segment => {
+                    allSegments.push({
+                      ...segment,
+                      segment_id: segmentIdCounter++,
+                      video_order: video.order,
+                      video_title: video.title
+                    });
+                  });
+                }
+              } else {
+                console.warn(`No transcript found for video ${video.order}: ${video.title}`);
+              }
+            } catch (videoError) {
+              console.error(`Error loading transcript for video ${video.order}:`, videoError);
+            }
+          }
+          
+          if (allSegments.length > 0) {
+            transcriptSegments = allSegments;
+            console.log(`Loaded ${allSegments.length} total segments from ${courseMetadata.videos.length} videos`);
+            return { segments: allSegments, metadata: courseMetadata };
+          }
+        }
+        
+        // Fallback: try single transcript file (for backward compatibility)
         const response = await fetch(`/data/transcripts/processed/sample_dialogic_transcript.json`);
         if (!response.ok) throw new Error('Failed to load transcript');
         
         const transcript = await response.json();
         transcriptSegments = transcript.segments || [];
+        console.log('Loaded single transcript file:', transcriptSegments.length, 'segments');
         return transcript;
       } catch (error) {
         console.error('Failed to load course:', error);
@@ -376,6 +456,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             pause_duration: 1500
           }
         ];
+        return { segments: transcriptSegments };
       }
     }
 

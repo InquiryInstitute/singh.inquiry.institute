@@ -1,0 +1,94 @@
+{
+  "class_id": "algebra-basics-intro",
+  "video_id": "sample-video-2",
+  "title": "Working with equations",
+  "segments": [
+    {
+      "segment_id": 1,
+      "text": "Now that we understand variables, let's learn how to work with equations.",
+      "start_time": 0,
+      "end_time": 6,
+      "duration": 6,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "equations-intro"
+    },
+    {
+      "segment_id": 2,
+      "text": "An equation is a statement that two expressions are equal.",
+      "start_time": 6,
+      "end_time": 12,
+      "duration": 6,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "equation-definition"
+    },
+    {
+      "segment_id": 3,
+      "text": "For example, 2x plus 3 equals 11 is an equation. The left side equals the right side.",
+      "start_time": 12,
+      "end_time": 20,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "equation-example"
+    },
+    {
+      "segment_id": 4,
+      "text": "To solve an equation, we need to find the value of the variable that makes both sides equal.",
+      "start_time": 20,
+      "end_time": 28,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "solving-concept"
+    },
+    {
+      "segment_id": 5,
+      "text": "We can use inverse operations to isolate the variable. If something is added, we subtract. If something is multiplied, we divide.",
+      "start_time": 28,
+      "end_time": 38,
+      "duration": 10,
+      "allows_questions": true,
+      "pause_duration": 3000,
+      "topic_marker": "inverse-operations"
+    },
+    {
+      "segment_id": 6,
+      "text": "Let's solve 2x plus 3 equals 11. First, subtract 3 from both sides to get 2x equals 8.",
+      "start_time": 38,
+      "end_time": 46,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "solving-step1"
+    },
+    {
+      "segment_id": 7,
+      "text": "Then divide both sides by 2 to get x equals 4. So the solution is x equals 4.",
+      "start_time": 46,
+      "end_time": 54,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "solving-step2"
+    },
+    {
+      "segment_id": 8,
+      "text": "We can check our answer by substituting 4 back into the original equation: 2 times 4 plus 3 equals 11. That's correct!",
+      "start_time": 54,
+      "end_time": 64,
+      "duration": 10,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "verification"
+    }
+  ],
+  "total_segments": 8,
+  "total_duration": 64,
+  "metadata": {
+    "source": "sample",
+    "created": "2025-01-20",
+    "format_version": "1.0"
+  }
+}
