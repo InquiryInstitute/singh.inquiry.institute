@@ -50,6 +50,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Chat Panel -->
     <div class="lg:col-span-2">
+      <!-- Faculty Portrait Display - Above Chat -->
+      <div id="facultyPortrait" class="mb-4 hidden">
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+          <div class="flex items-center gap-4">
+            <img 
+              id="facultyPortraitImg" 
+              src="" 
+              alt="Faculty portrait" 
+              class="w-24 h-24 rounded-lg object-cover border-2 border-amber-500 shadow-md"
+              onerror="this.src='https://inquiry.institute/inquisitors/portraits/a-plato.jpg'"
+            />
+            <div class="flex-1">
+              <div id="facultyPortraitName" class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-1"></div>
+              <div id="facultyPortraitDiscipline" class="text-sm text-slate-600 dark:text-slate-400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex flex-col" style="height: calc(100vh - 8rem); min-height: 600px;">
         <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
           <h2 class="text-xl font-semibold">Dialogic Delivery</h2>
@@ -128,6 +147,47 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const statusBadge = document.getElementById('statusBadge');
     const progressBar = document.getElementById('progressBar');
     const progressFill = document.getElementById('progressFill');
+    const facultyPortrait = document.getElementById('facultyPortrait');
+    const facultyPortraitImg = document.getElementById('facultyPortraitImg');
+    const facultyPortraitName = document.getElementById('facultyPortraitName');
+    const facultyPortraitDiscipline = document.getElementById('facultyPortraitDiscipline');
+
+    // Get portrait URL for faculty slug
+    function getPortraitUrl(slug) {
+      if (!slug) return 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
+      
+      // Convert slug format: a.gauss -> a-gauss
+      const portraitSlug = slug.startsWith('a.') 
+        ? slug.replace(/^a\./, 'a-').replace(/\./g, '-')
+        : slug.startsWith('a-')
+        ? slug
+        : `a-${slug.replace(/\./g, '-')}`;
+      
+      // Try GCS first (higher quality)
+      return `https://storage.googleapis.com/afaculty/portraits/${portraitSlug}.jpg`;
+    }
+
+    // Update faculty portrait display
+    function updateFacultyPortrait(facultyId, facultyName, discipline) {
+      if (!facultyId || !facultyPortrait) return;
+      
+      const portraitUrl = getPortraitUrl(facultyId);
+      
+      if (facultyPortraitImg) {
+        facultyPortraitImg.src = portraitUrl;
+        facultyPortraitImg.alt = `${facultyName} portrait`;
+      }
+      
+      if (facultyPortraitName) {
+        facultyPortraitName.textContent = facultyName;
+      }
+      
+      if (facultyPortraitDiscipline) {
+        facultyPortraitDiscipline.textContent = discipline || '';
+      }
+      
+      facultyPortrait.classList.remove('hidden');
+    }
 
     // Load faculty list
     async function loadFaculty() {
@@ -144,6 +204,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           const option = document.createElement('option');
           option.value = f.id;
           option.textContent = f.name;
+          option.dataset.discipline = f.fields?.join(', ') || '';
           facultySelect.appendChild(option);
         });
       } catch (error) {
@@ -194,10 +255,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           option.value = f.id;
           option.textContent = `${f.name} (${f.discipline})`;
           option.title = f.discipline;
+          option.dataset.discipline = f.discipline;
           facultySelect.appendChild(option);
         });
       }
     }
+
+    // Handle faculty selection change
+    facultySelect.addEventListener('change', (e) => {
+      const selectedOption = e.target.options[e.target.selectedIndex];
+      if (selectedOption.value) {
+        const facultyId = selectedOption.value;
+        const facultyName = selectedOption.textContent.split(' (')[0];
+        const discipline = selectedOption.dataset.discipline || '';
+        updateFacultyPortrait(facultyId, facultyName, discipline);
+      } else {
+        if (facultyPortrait) {
+          facultyPortrait.classList.add('hidden');
+        }
+      }
+    });
 
     // Load course transcript
     async function loadCourse(courseId) {
@@ -233,11 +310,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const messageDiv = document.createElement('div');
       messageDiv.className = `flex gap-3 ${type === 'user' ? 'flex-row-reverse' : ''}`;
       
-      const avatar = document.createElement('div');
-      avatar.className = `w-10 h-10 rounded-full flex items-center justify-center font-semibold flex-shrink-0 ${
-        type === 'faculty' ? 'bg-amber-500 text-white' : 'bg-slate-500 text-white'
-      }`;
-      avatar.textContent = type === 'faculty' ? (sender ? sender.charAt(0).toUpperCase() : 'F') : 'U';
+      // Use portrait for faculty, avatar for user
+      const avatar = document.createElement(type === 'faculty' ? 'img' : 'div');
+      if (type === 'faculty' && sender) {
+        avatar.className = 'w-10 h-10 rounded-full object-cover border-2 border-amber-500 flex-shrink-0';
+        avatar.src = getPortraitUrl(sender);
+        avatar.alt = `${sender} portrait`;
+        avatar.onerror = function() {
+          // Fallback to initial-based avatar if image fails
+          this.style.display = 'none';
+          const fallback = document.createElement('div');
+          fallback.className = 'w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-semibold flex-shrink-0';
+          fallback.textContent = sender.charAt(0).toUpperCase();
+          this.parentNode.insertBefore(fallback, this);
+        };
+      } else {
+        avatar.className = `w-10 h-10 rounded-full flex items-center justify-center font-semibold flex-shrink-0 bg-slate-500 text-white`;
+        avatar.textContent = 'U';
+      }
       
       const content = document.createElement('div');
       content.className = `flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%] ${
