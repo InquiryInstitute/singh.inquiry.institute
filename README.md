@@ -1,166 +1,95 @@
 # singh.inquiry.institute
 
-Repository for Singh Inquiry Institute project - Khan Academy content collection and aFaculty integration.
+Repository for Singh Inquiry Institute project - Khan Academy content collection and aFaculty integration with dialogic delivery.
 
 ## Overview
 
 This repository contains tools and infrastructure for:
 - **Collecting all Khan Academy videos and transcripts** - Comprehensive cataloging and download pipeline
 - **Mapping content to aFaculty personas** - Connecting Khan Academy courses to teaching assistants
-- **Preparing LoRA fine-tuning workflows** - Adapting aFaculty personas to teach Khan Academy content
-- **Integrating with Inquiry Institute tooling** - Enabling aFaculty to guide learners through course content
+- **Dialogic delivery via Matrix chat** - Delivering Khan Academy content in an interruptible, dialogic format using the [dialogic](https://github.com/InquiryInstitute/dialogic) library
 
 ## Project Structure
 
 ```
 singh.inquiry.institute/
+├── src/
+│   ├── pages/              # Astro pages
+│   │   ├── index.astro     # Main page
+│   │   └── matrix-chat.astro  # Dialogic delivery interface
+│   └── layouts/            # Astro layouts
 ├── data/                    # Collected data (gitignored)
 │   ├── videos/             # Downloaded video files
 │   ├── transcripts/        # Processed transcripts
 │   ├── metadata/           # Catalogs and metadata
 │   └── exercises/          # Exercise data
-├── src/                    # Source code
-│   ├── api/               # Khan Academy API client
-│   ├── download/          # Video download utilities
-│   └── process/           # Data processing scripts
-├── scripts/               # Main execution scripts
-├── docs/                  # Documentation
-└── .github/              # GitHub workflows (Pages deployment)
+├── public/                  # Static assets (deployed)
+│   └── data/               # Public transcript data
+├── scripts/                 # Main execution scripts
+├── docs/                    # Documentation
+└── .github/                 # GitHub workflows (Pages deployment)
 ```
 
 ## Quick Start
 
-### 1. Setup Environment
+### Development
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
-# Or use a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-### 1a. Setup Google Cloud Storage (Optional but Recommended)
+### Using Dialogic Library
 
-For storing videos in GCS instead of locally:
+The Matrix chat page uses the [dialogic](https://github.com/InquiryInstitute/dialogic) JavaScript library:
 
-1. Create a GCS bucket
-2. Create a service account and download credentials JSON
-3. Set environment variable: `export GOOGLE_APPLICATION_CREDENTIALS="/path/to/credentials.json"`
+```javascript
+import { Dialogic, DialogicAPI } from 'https://cdn.jsdelivr.net/gh/InquiryInstitute/dialogic@main/src/index.js';
 
-See [GCS Setup Guide](./docs/GCS_SETUP.md) for detailed instructions.
+const dialogic = new Dialogic({
+  matrixServer: 'https://matrix.inquiry.institute',
+  apiUrl: 'https://xougqdomkoisrxdnagcj.supabase.co/functions/v1',
+  apiKey: 'your-api-key'
+});
 
-### 2. Discover All Khan Academy Content
-
-```bash
-# Discover all videos and create catalog
-python scripts/discover_all_content.py
-
-# This creates: data/metadata/khan_academy_catalog.json
+await dialogic.initialize(roomId, segments, facultyId);
+await dialogic.start();
 ```
 
-### 3. Download Transcripts (Recommended First Step)
+## Deployment
 
-**Start with transcripts only** - Much faster and smaller:
+The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the `main` branch.
 
-```bash
-# Discover and download transcripts to GCS
-python scripts/download_transcripts_only.py \
-  --gcs-bucket your-bucket-name \
-  --discover-first \
-  --max 100  # Test with 100 first
+- **Custom domain**: `singh.inquiry.institute`
+- **Build**: Astro static site generation
+- **Workflow**: `.github/workflows/pages.yml`
 
-# Or use existing catalog
-python scripts/download_transcripts_only.py \
-  --gcs-bucket your-bucket-name \
-  --catalog data/metadata/khan_academy_catalog.json
-```
+## Technology Stack
 
-### 4. Download Videos (Optional, Later)
+- **Framework**: Astro (static site generation)
+- **Styling**: Tailwind CSS
+- **Dialogic Library**: [@inquiry-institute/dialogic](https://github.com/InquiryInstitute/dialogic)
+- **Deployment**: GitHub Pages
 
-After analyzing transcripts, download videos selectively:
+## Related Projects
 
-```bash
-# Download to local storage
-python scripts/download_all.py
-
-# Download directly to Google Cloud Storage
-python scripts/download_all.py --gcs-bucket your-bucket-name
-
-# Or download a limited number for testing
-python scripts/download_all.py --gcs-bucket your-bucket-name --max 10
-
-# Download only transcripts (skip video files)
-python scripts/download_all.py --skip-video
-
-# Keep local files after GCS upload (default: delete after upload)
-python scripts/download_all.py --gcs-bucket your-bucket-name --keep-local
-```
-
-### 4. Process Transcripts
-
-```bash
-# Process downloaded transcripts into structured formats
-python scripts/download_all.py --skip-video  # Process existing transcripts
-```
-
-## Usage
-
-### Discovery Script
-
-```bash
-python scripts/discover_all_content.py [OPTIONS]
-
-Options:
-  --output PATH     Output path for catalog (default: data/metadata/khan_academy_catalog.json)
-  --rate-limit SEC Delay between API requests (default: 0.5)
-```
-
-### Download Script
-
-```bash
-python scripts/download_all.py [OPTIONS]
-
-Options:
-  --catalog PATH      Path to video catalog JSON
-  --video-dir PATH    Directory to save videos
-  --transcript-dir PATH  Directory to save processed transcripts
-  --max N             Maximum number of videos to download
-  --skip-video        Skip video download, only get transcripts
-  --skip-transcript   Skip transcript processing
-```
-
-## Data Pipeline
-
-1. **Discovery** → Catalog all Khan Academy videos
-2. **Download** → Download videos and transcripts from YouTube
-3. **Processing** → Convert transcripts to structured formats (JSON, plain text)
-4. **Integration** → Map content to aFaculty personas and prepare for LoRA training
+- [dialogic](https://github.com/InquiryInstitute/dialogic) - JavaScript library for dialogic delivery
+- [Inquiry.Institute](https://github.com/InquiryInstitute/Inquiry.Institute) - Main platform
 
 ## Documentation
 
 - [Khan Academy API Documentation](./docs/KHAN_ACADEMY_API.md) - API endpoints and data structures
 - [Google Cloud Storage Setup](./docs/GCS_SETUP.md) - GCS bucket configuration and usage
-- [AWS Route 53 Setup](./AWS_ROUTE53_SETUP.md) - DNS configuration for custom domain
-- [Repository Setup](./REPOSITORY_SETUP.md) - GitHub repository configuration
-
-## GitHub Pages
-
-The site is configured to deploy automatically via GitHub Actions. See:
-- `.github/workflows/pages.yml` - Deployment workflow
-- Custom domain: `singh.inquiry.institute`
-
-## Requirements
-
-- Python 3.8+
-- ffmpeg (for video processing, optional)
-- Sufficient disk space for video storage (videos are large!)
-
-## Next Steps
-
-See [TODO.md](./TODO.md) for project objectives and near-term tasks.
+- [Transcript Status](./TRANSCRIPT_STATUS.md) - Current transcript collection status
 
 ---
 

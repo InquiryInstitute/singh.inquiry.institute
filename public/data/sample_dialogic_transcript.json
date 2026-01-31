@@ -1,0 +1,94 @@
+{
+  "class_id": "algebra-basics-intro",
+  "video_id": "NybHckSEQBI",
+  "title": "Introduction to variables",
+  "segments": [
+    {
+      "segment_id": 1,
+      "text": "Welcome to algebra. Today we'll explore the fundamental concepts of variables and how they work.",
+      "start_time": 0,
+      "end_time": 8,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "introduction"
+    },
+    {
+      "segment_id": 2,
+      "text": "A variable is a symbol, usually a letter, that represents a number we don't know yet.",
+      "start_time": 8,
+      "end_time": 15,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 1500,
+      "topic_marker": "definition"
+    },
+    {
+      "segment_id": 3,
+      "text": "For example, if I say x equals 5, then x is our variable and 5 is its value.",
+      "start_time": 15,
+      "end_time": 22,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "example"
+    },
+    {
+      "segment_id": 4,
+      "text": "Variables are powerful because they let us write general rules that work for any number.",
+      "start_time": 22,
+      "end_time": 30,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "concept"
+    },
+    {
+      "segment_id": 5,
+      "text": "Let's look at a simple equation: x plus 3 equals 7. What value of x makes this true?",
+      "start_time": 30,
+      "end_time": 38,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 3000,
+      "topic_marker": "practice"
+    },
+    {
+      "segment_id": 6,
+      "text": "If we subtract 3 from both sides, we get x equals 4. So x is 4.",
+      "start_time": 38,
+      "end_time": 45,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "solution"
+    },
+    {
+      "segment_id": 7,
+      "text": "This is the foundation of algebra - using operations to find unknown values.",
+      "start_time": 45,
+      "end_time": 52,
+      "duration": 7,
+      "allows_questions": true,
+      "pause_duration": 2000,
+      "topic_marker": "summary"
+    },
+    {
+      "segment_id": 8,
+      "text": "In the next lesson, we'll explore more complex equations and multiple variables.",
+      "start_time": 52,
+      "end_time": 60,
+      "duration": 8,
+      "allows_questions": true,
+      "pause_duration": 1000,
+      "topic_marker": "transition"
+    }
+  ],
+  "total_segments": 8,
+  "total_duration": 60,
+  "metadata": {
+    "source": "sample",
+    "created": "2025-01-20",
+    "format_version": "1.0"
+  }
+}

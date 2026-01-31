@@ -25,29 +25,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Build static site
+      - name: Build with Astro
+        run: npm run build
+      
+      - name: Copy data files
         run: |
-          # Create _site directory for static files
-          mkdir -p _site
-          # Copy HTML files
-          cp index.html _site/
-          # Copy .nojekyll to disable Jekyll processing
-          touch _site/.nojekyll
+          # Copy data directory to dist
+          mkdir -p dist/data
+          [ -d data/metadata ] && cp -r data/metadata dist/data/ || true
+          [ -d data/transcripts ] && cp -r data/transcripts dist/data/ || true
+          [ -d public/data ] && cp -r public/data/* dist/data/ || true
           # Copy CNAME for custom domain
-          cp CNAME _site/
-          # Copy other static assets
-          [ -d docs ] && cp -r docs _site/ || true
-          # List what we're deploying
-          echo "Files to deploy:"
-          ls -la _site/
+          [ -f CNAME ] && cp CNAME dist/ || true
+          # Copy .nojekyll to disable Jekyll processing
+          touch dist/.nojekyll
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./dist
       
       - name: Deploy to GitHub Pages
         id: deployment

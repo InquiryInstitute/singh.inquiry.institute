@@ -1,0 +1,32 @@
+{
+  "name": "singh",
+  "version": "1.0.0",
+  "description": "Repository for Singh Inquiry Institute project - Khan Academy content collection and aFaculty integration.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InquiryInstitute/singh.inquiry.institute.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/InquiryInstitute/singh.inquiry.institute/issues"
+  },
+  "homepage": "https://github.com/InquiryInstitute/singh.inquiry.institute#readme",
+  "devDependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.17.1"
+  }
+}

@@ -1,0 +1,332 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Dialogic Matrix Chat Delivery - Singh">
+  <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Setup Panel -->
+    <div class="lg:col-span-1">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6 sticky top-20">
+        <h2 class="text-2xl font-semibold mb-6">Setup</h2>
+        
+        <div class="mb-4">
+          <label for="courseSelect" class="block text-sm font-medium mb-2">Khan Academy Class</label>
+          <select id="courseSelect" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900">
+            <option value="">-- Select a class --</option>
+            <option value="algebra-basics-intro">Introduction to Algebra</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="facultySelect" class="block text-sm font-medium mb-2">a.Faculty Persona</label>
+          <select id="facultySelect" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900">
+            <option value="">-- Select a.Faculty --</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="matrixRoom" class="block text-sm font-medium mb-2">Matrix Room (optional)</label>
+          <input 
+            type="text" 
+            id="matrixRoom" 
+            placeholder="#ka-algebra:matrix.inquiry.institute"
+            class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900"
+          >
+        </div>
+
+        <button 
+          id="startBtn" 
+          class="w-full px-4 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
+          disabled
+        >
+          Start Delivery
+        </button>
+
+        <div id="progressBar" class="hidden mt-4 h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div id="progressFill" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="lg:col-span-2">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex flex-col" style="height: calc(100vh - 8rem); min-height: 600px;">
+        <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+          <h2 class="text-xl font-semibold">Dialogic Delivery</h2>
+          <span id="statusBadge" class="px-3 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
+            Disconnected
+          </span>
+        </div>
+
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-6 space-y-4">
+          <div class="flex gap-3">
+            <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-semibold flex-shrink-0">
+              S
+            </div>
+            <div class="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%]">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-semibold">Singh</span>
+                <span class="text-xs text-slate-500">Now</span>
+              </div>
+              <div class="text-slate-900 dark:text-slate-100">
+                Select a Khan Academy class and a.Faculty persona to begin dialogic delivery.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex gap-3">
+          <textarea 
+            id="chatInput" 
+            class="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 resize-none"
+            placeholder="Ask a question or type a message..."
+            rows="2"
+            disabled
+          ></textarea>
+          <button 
+            id="sendBtn" 
+            class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
+            disabled
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load dialogic library - will be loaded when needed
+    let Dialogic, DialogicAPI;
+    
+    async function loadDialogic() {
+      if (!Dialogic) {
+        const module = await import('https://cdn.jsdelivr.net/gh/InquiryInstitute/dialogic@main/src/index.js');
+        Dialogic = module.Dialogic;
+        DialogicAPI = module.DialogicAPI;
+      }
+      return { Dialogic, DialogicAPI };
+    }
+
+    // Configuration
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdWdxZG9ta29pc3J4ZG5hZ2NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NjIwMTIsImV4cCI6MjA4MTUzODAxMn0.eA1vXG6UVI1AjUOXN7q3gTlSyPoDByuVehOcKPjHmvs';
+    
+    // State
+    let dialogic = null;
+    let currentCourse = null;
+    let currentFaculty = null;
+    let transcriptSegments = [];
+
+    // DOM Elements
+    const courseSelect = document.getElementById('courseSelect');
+    const facultySelect = document.getElementById('facultySelect');
+    const matrixRoomInput = document.getElementById('matrixRoom');
+    const startBtn = document.getElementById('startBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const statusBadge = document.getElementById('statusBadge');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+
+    // Load faculty list
+    async function loadFaculty() {
+      const { DialogicAPI: API } = await loadDialogic();
+      const api = new API({
+        apiUrl: 'https://xougqdomkoisrxdnagcj.supabase.co/functions/v1',
+        apiKey: SUPABASE_ANON_KEY
+      });
+
+      try {
+        const faculty = await api.getFaculty();
+        facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
+        faculty.forEach(f => {
+          const option = document.createElement('option');
+          option.value = f.id;
+          option.textContent = f.name;
+          facultySelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Failed to load faculty:', error);
+        // Fallback
+        const sampleFaculty = [
+          { id: 'a.gauss', name: 'Carl Friedrich Gauss' },
+          { id: 'a.einstein', name: 'Albert Einstein' },
+          { id: 'a.plato', name: 'Plato' }
+        ];
+        facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
+        sampleFaculty.forEach(f => {
+          const option = document.createElement('option');
+          option.value = f.id;
+          option.textContent = f.name;
+          facultySelect.appendChild(option);
+        });
+      }
+    }
+
+    // Load course transcript
+    async function loadCourse(courseId) {
+      try {
+        const response = await fetch(`/data/transcripts/processed/sample_dialogic_transcript.json`);
+        if (!response.ok) throw new Error('Failed to load transcript');
+        
+        const transcript = await response.json();
+        transcriptSegments = transcript.segments || [];
+        return transcript;
+      } catch (error) {
+        console.error('Failed to load course:', error);
+        // Use embedded sample
+        transcriptSegments = [
+          {
+            segment_id: 1,
+            text: "Welcome to algebra. Today we'll explore the fundamental concepts of variables and how they work.",
+            allows_questions: true,
+            pause_duration: 2000
+          },
+          {
+            segment_id: 2,
+            text: "A variable is a symbol, usually a letter, that represents a number we don't know yet.",
+            allows_questions: true,
+            pause_duration: 1500
+          }
+        ];
+      }
+    }
+
+    // Add message to chat
+    function addMessage(type, text, sender = null) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `flex gap-3 ${type === 'user' ? 'flex-row-reverse' : ''}`;
+      
+      const avatar = document.createElement('div');
+      avatar.className = `w-10 h-10 rounded-full flex items-center justify-center font-semibold flex-shrink-0 ${
+        type === 'faculty' ? 'bg-amber-500 text-white' : 'bg-slate-500 text-white'
+      }`;
+      avatar.textContent = type === 'faculty' ? (sender ? sender.charAt(0).toUpperCase() : 'F') : 'U';
+      
+      const content = document.createElement('div');
+      content.className = `flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%] ${
+        type === 'user' ? 'bg-amber-50 dark:bg-amber-900/20' : ''
+      }`;
+      
+      const header = document.createElement('div');
+      header.className = 'flex justify-between items-center mb-1';
+      
+      const senderSpan = document.createElement('span');
+      senderSpan.className = 'text-sm font-semibold';
+      senderSpan.textContent = sender || (type === 'faculty' ? 'a.Faculty' : 'You');
+      
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'text-xs text-slate-500';
+      timeSpan.textContent = new Date().toLocaleTimeString();
+      
+      header.appendChild(senderSpan);
+      header.appendChild(timeSpan);
+      
+      const textDiv = document.createElement('div');
+      textDiv.className = 'text-slate-900 dark:text-slate-100';
+      textDiv.textContent = text;
+      
+      content.appendChild(header);
+      content.appendChild(textDiv);
+      
+      messageDiv.appendChild(avatar);
+      messageDiv.appendChild(content);
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Start delivery
+    async function startDelivery() {
+      const courseId = courseSelect.value;
+      const facultyId = facultySelect.value;
+      const roomAlias = matrixRoomInput.value.trim();
+
+      if (!courseId || !facultyId) {
+        alert('Please select both a course and a.Faculty');
+        return;
+      }
+
+      currentCourse = courseId;
+      currentFaculty = facultyId;
+      
+      // Load transcript
+      await loadCourse(courseId);
+      
+      // Initialize dialogic
+      const { Dialogic: DialogicClass } = await loadDialogic();
+      dialogic = new DialogicClass({
+        matrixServer: 'https://matrix.inquiry.institute',
+        apiUrl: 'https://xougqdomkoisrxdnagcj.supabase.co/functions/v1',
+        apiKey: SUPABASE_ANON_KEY,
+        defaultPauseDuration: 2000
+      });
+
+      await dialogic.initialize(
+        roomAlias || null,
+        transcriptSegments,
+        facultyId
+      );
+
+      // Set up callbacks
+      dialogic.onSegment((segment, index, total) => {
+        addMessage('faculty', segment.text, facultyId);
+        const progress = ((index + 1) / total) * 100;
+        progressFill.style.width = `${progress}%`;
+      });
+
+      dialogic.onComplete(() => {
+        statusBadge.textContent = 'Complete';
+        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400';
+        addMessage('system', 'Delivery complete!');
+      });
+
+      dialogic.onQuestionResponse((question, answer) => {
+        addMessage('faculty', answer, facultyId);
+      });
+
+      // Update UI
+      statusBadge.textContent = roomAlias ? 'Connected' : 'Local Mode';
+      statusBadge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400';
+      progressBar.classList.remove('hidden');
+      chatInput.disabled = false;
+      sendBtn.disabled = false;
+
+      addMessage('system', `Starting delivery of "${courseSelect.options[courseSelect.selectedIndex].text}" by ${facultySelect.options[facultySelect.selectedIndex].text}`);
+      
+      // Start
+      await dialogic.start();
+    }
+
+    // Handle send
+    sendBtn.addEventListener('click', () => {
+      const question = chatInput.value.trim();
+      if (question && dialogic) {
+        dialogic.handleQuestion(question, currentFaculty);
+        addMessage('user', question);
+        chatInput.value = '';
+      }
+    });
+
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    // Update start button
+    function updateStartButton() {
+      startBtn.disabled = !(courseSelect.value && facultySelect.value);
+    }
+
+    courseSelect.addEventListener('change', updateStartButton);
+    facultySelect.addEventListener('change', updateStartButton);
+    startBtn.addEventListener('click', startDelivery);
+
+    // Initialize
+    loadFaculty();
+    updateStartButton();
+  </script>
+</BaseLayout>

@@ -1,0 +1,17 @@
+{
+  "class_id": "algebra-basics-intro",
+  "title": "Introduction to Algebra",
+  "subject": "Math",
+  "topic": "Algebra",
+  "description": "An introduction to algebraic thinking and basic operations",
+  "videos": [
+    {
+      "video_id": "NybHckSEQBI",
+      "title": "Introduction to variables",
+      "youtube_id": "NybHckSEQBI",
+      "duration": 600,
+      "order": 1
+    }
+  ],
+  "faculty_suggestions": ["a.gauss", "a.plato", "a.einstein"]
+}
