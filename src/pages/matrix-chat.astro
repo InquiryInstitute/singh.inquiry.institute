@@ -148,17 +148,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         });
       } catch (error) {
         console.error('Failed to load faculty:', error);
-        // Fallback
+        // Fallback - comprehensive faculty list for Khan Academy content
         const sampleFaculty = [
-          { id: 'a.gauss', name: 'Carl Friedrich Gauss' },
-          { id: 'a.einstein', name: 'Albert Einstein' },
-          { id: 'a.plato', name: 'Plato' }
+          // Mathematics
+          { id: 'a.gauss', name: 'Carl Friedrich Gauss', discipline: 'Mathematics' },
+          { id: 'a.euler', name: 'Leonhard Euler', discipline: 'Mathematics' },
+          { id: 'a.hypatia', name: 'Hypatia', discipline: 'Mathematics' },
+          { id: 'a.plato', name: 'Plato', discipline: 'Mathematics & Philosophy' },
+          { id: 'a.cantor', name: 'Georg Cantor', discipline: 'Mathematics' },
+          { id: 'a.ramanujan', name: 'Srinivasa Ramanujan', discipline: 'Mathematics' },
+          
+          // Physics
+          { id: 'a.einstein', name: 'Albert Einstein', discipline: 'Physics' },
+          { id: 'a.newton', name: 'Isaac Newton', discipline: 'Physics & Mathematics' },
+          { id: 'a.tesla', name: 'Nikola Tesla', discipline: 'Physics & Engineering' },
+          { id: 'a.curie', name: 'Marie Curie', discipline: 'Physics & Chemistry' },
+          { id: 'a.feynman', name: 'Richard Feynman', discipline: 'Physics' },
+          { id: 'a.hawking', name: 'Stephen Hawking', discipline: 'Physics' },
+          
+          // Chemistry
+          { id: 'a.mendeleev', name: 'Dmitri Mendeleev', discipline: 'Chemistry' },
+          { id: 'a.lavoisier', name: 'Antoine Lavoisier', discipline: 'Chemistry' },
+          
+          // Biology
+          { id: 'a.darwin', name: 'Charles Darwin', discipline: 'Biology' },
+          { id: 'a.franklin', name: 'Rosalind Franklin', discipline: 'Biology' },
+          
+          // History
+          { id: 'a.gibbon', name: 'Edward Gibbon', discipline: 'History' },
+          { id: 'a.toynbee', name: 'Arnold Toynbee', discipline: 'History' },
+          
+          // Literature & Philosophy
+          { id: 'a.shelley', name: 'Mary Shelley', discipline: 'Literature & Science' },
+          { id: 'a.woolf', name: 'Virginia Woolf', discipline: 'Literature' },
+          { id: 'a.nietzsche', name: 'Friedrich Nietzsche', discipline: 'Philosophy' },
+          { id: 'a.steiner', name: 'Rudolf Steiner', discipline: 'Philosophy & Education' },
+          
+          // Arts & Interdisciplinary
+          { id: 'a.davinci', name: 'Leonardo da Vinci', discipline: 'Art & Science' },
+          { id: 'a.carson', name: 'Rachel Carson', discipline: 'Environmental Science' },
         ];
         facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
         sampleFaculty.forEach(f => {
           const option = document.createElement('option');
           option.value = f.id;
-          option.textContent = f.name;
+          option.textContent = `${f.name} (${f.discipline})`;
+          option.title = f.discipline;
           facultySelect.appendChild(option);
         });
       }

@@ -31,11 +31,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 
   <script>
-    // Sample lectures data
+    // Sample lectures data with suggested faculty
     const lectures = [
-      { id: 1, title: "Introduction to Algebra", subject: "Math", topic: "Algebra", duration: "10:30", youtubeId: "NybHckSEQBI" },
-      { id: 2, title: "Basic Geometry", subject: "Math", topic: "Geometry", duration: "15:45", youtubeId: "xZ6g1fX2Y7g" },
-      { id: 3, title: "World War I", subject: "History", topic: "World History", duration: "20:15", youtubeId: "_XPZQ0LAlR4" },
+      { 
+        id: 1, 
+        title: "Introduction to Algebra", 
+        subject: "Math", 
+        topic: "Algebra", 
+        duration: "10:30", 
+        youtubeId: "NybHckSEQBI",
+        suggestedFaculty: ["a.gauss", "a.euler", "a.plato"]
+      },
+      { 
+        id: 2, 
+        title: "Basic Geometry", 
+        subject: "Math", 
+        topic: "Geometry", 
+        duration: "15:45", 
+        youtubeId: "xZ6g1fX2Y7g",
+        suggestedFaculty: ["a.hypatia", "a.plato", "a.euler"]
+      },
+      { 
+        id: 3, 
+        title: "World War I", 
+        subject: "History", 
+        topic: "World History", 
+        duration: "20:15", 
+        youtubeId: "_XPZQ0LAlR4",
+        suggestedFaculty: ["a.gibbon", "a.toynbee"]
+      },
+      { 
+        id: 4, 
+        title: "Newton's Laws of Motion", 
+        subject: "Physics", 
+        topic: "Mechanics", 
+        duration: "18:30", 
+        youtubeId: "kKKM8Y-u7ds",
+        suggestedFaculty: ["a.newton", "a.einstein", "a.tesla"]
+      },
+      { 
+        id: 5, 
+        title: "Introduction to Chemistry", 
+        subject: "Chemistry", 
+        topic: "Chemistry Basics", 
+        duration: "12:20", 
+        youtubeId: "sQK3Yr4Sc_k",
+        suggestedFaculty: ["a.mendeleev", "a.curie", "a.lavoisier"]
+      },
+      { 
+        id: 6, 
+        title: "Evolution and Natural Selection", 
+        subject: "Biology", 
+        topic: "Evolution", 
+        duration: "15:00", 
+        youtubeId: "R6La6_kIr9g",
+        suggestedFaculty: ["a.darwin", "a.franklin"]
+      },
     ];
 
     // Render lectures
@@ -44,9 +95,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       grid.innerHTML = lectures.map(lecture => `
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6 hover:border-amber-500 transition-colors">
           <h3 class="text-xl font-semibold mb-2">${lecture.title}</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
             ${lecture.subject} • ${lecture.topic} • ${lecture.duration}
           </p>
+          ${lecture.suggestedFaculty ? `
+            <p class="text-xs text-amber-600 dark:text-amber-400 mt-2">
+              Suggested: ${lecture.suggestedFaculty.slice(0, 2).map(f => f.replace('a.', 'a.')).join(', ')}
+            </p>
+          ` : ''}
         </div>
       `).join('');
     }

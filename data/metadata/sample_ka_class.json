@@ -13,5 +13,18 @@
       "order": 1
     }
   ],
-  "faculty_suggestions": ["a.gauss", "a.plato", "a.einstein"]
+  "faculty_suggestions": [
+    "a.gauss",
+    "a.plato", 
+    "a.einstein",
+    "a.euler",
+    "a.hypatia",
+    "a.newton",
+    "a.tesla",
+    "a.curie",
+    "a.mendeleev",
+    "a.darwin",
+    "a.shelley",
+    "a.davinci"
+  ]
 }
