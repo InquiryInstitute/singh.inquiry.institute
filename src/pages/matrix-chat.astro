@@ -208,13 +208,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       } catch (error) {
         // Silently fail - we'll use GCS fallback
         // Network errors are expected in some environments, so we don't log them
-        // Only log unexpected errors
-        if (error && error.message) {
-          const errorMsg = error.message;
-          if (!errorMsg.includes('Failed to fetch') && !errorMsg.includes('ERR_NAME_NOT_RESOLVED')) {
-            console.warn('Failed to fetch portrait from Supabase:', error);
-          }
-        }
       }
 
       // Fallback: try GCS
@@ -292,13 +285,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
       } catch (error) {
         // Silently fail and use fallback - network errors are expected in some environments
-        // Only log unexpected errors
-        if (error && error.message) {
-          const errorMsg = error.message;
-          if (!errorMsg.includes('Failed to fetch') && !errorMsg.includes('ERR_NAME_NOT_RESOLVED')) {
-            console.warn('Failed to load faculty from Supabase (using fallback):', error);
-          }
-        }
       }
       
       // Fallback to hardcoded list (always available)
