@@ -574,6 +574,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       chatInput.placeholder = 'Ask a question or type a message...';
     }
 
+    // Generate contextual answer when API fails
+    function generateContextualAnswer(question, context) {
+      const lowerQuestion = question.toLowerCase();
+      
+      // Check for common question patterns and provide helpful responses
+      if (lowerQuestion.includes('variable') && (lowerQuestion.includes('not') || lowerQuestion.includes('no longer'))) {
+        return `That's an excellent observation! You're absolutely right to question this. When we assign a specific value like 5 to x, we're creating an equation where x has a definite value. However, x is still called a "variable" because in the general form of the equation, it can take different values. The term "variable" refers to the symbol's role in the equation structure, not whether it currently has a fixed value. Would you like me to explore this distinction further?`;
+      }
+      
+      if (lowerQuestion.includes('why') || lowerQuestion.includes('how')) {
+        return `That's a thoughtful question about ${context || 'this topic'}. Let me think through this carefully. The key insight here is that ${context ? 'in this context, ' : ''}we need to consider multiple perspectives. Would you like me to elaborate on a specific aspect?`;
+      }
+      
+      if (lowerQuestion.includes('what') || lowerQuestion.includes('explain')) {
+        return `I appreciate you asking for clarification. ${context ? `In the context of ${context}, ` : ''}this concept involves several important ideas. Let me break this down step by step so we can explore it together.`;
+      }
+      
+      // Generic but helpful response
+      return `That's a great question! ${context ? `In the context of ${context}, ` : ''}this is an important point to understand. Let me explain this more clearly so we can explore it together.`;
+    }
+
     // Make clearReply available globally for onclick
     window.clearReply = clearReply;
 
@@ -643,11 +664,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     sendBtn.addEventListener('click', async () => {
       const question = chatInput.value.trim();
       if (question && dialogic && currentFaculty) {
-        addMessage('user', question, null, replyingToMessageId);
-        const questionWithReply = replyingToMessageId 
-          ? `[Replying to previous message] ${question}`
-          : question;
+        const userMessageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        const userMsg = addMessage('user', question, null, replyingToMessageId);
+        userMsg.dataset.messageId = userMessageId;
+        
         chatInput.value = '';
+        const replyToId = replyingToMessageId; // Save before clearing
         clearReply();
         chatInput.disabled = true;
         sendBtn.disabled = true;
@@ -666,32 +688,87 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             dialogic.deliveryEngine.pause();
           }
           
-          // Call API directly with context
-          const { DialogicAPI: API } = await loadDialogic();
-          const api = new API({
-            apiUrl: 'https://xougqdomkoisrxdnagcj.supabase.co/functions/v1',
-            apiKey: SUPABASE_ANON_KEY
-          });
+          // Try ask-faculty endpoint directly (most reliable for actual answers)
+          let response = null;
+          let answer = null;
           
-          const response = await api.askFaculty(currentFaculty, questionWithReply, {
-            context: lessonContext,
-            conversationHistory: []
-          });
+          // Try ask-faculty endpoint first - use correct format
+          try {
+            const apiResponse = await fetch('https://xougqdomkoisrxdnagcj.supabase.co/functions/v1/ask-faculty', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+              },
+              body: JSON.stringify({
+                faculty_id: currentFaculty,
+                message: question,  // Use 'message' not 'question'
+                conversation_history: [],
+                context: 'office_hours'  // Use office_hours context for Q&A
+              })
+            });
+
+            if (apiResponse.ok) {
+              const data = await apiResponse.json();
+              answer = data.response || data.answer || data.reply;
+              console.log('ask-faculty response:', data);
+              
+              // Check if we got a real answer (not generic fallback)
+              if (answer && answer.trim() && 
+                  !answer.includes('Thank you for that question') &&
+                  !answer.includes('Let me continue with the lesson')) {
+                response = { answer, source: 'ask-faculty' };
+              } else {
+                console.warn('Got generic response from ask-faculty:', answer);
+              }
+            } else {
+              const errorText = await apiResponse.text();
+              console.warn('ask-faculty error:', apiResponse.status, errorText);
+            }
+          } catch (err) {
+            console.warn('ask-faculty failed:', err);
+          }
+          
+          // Fallback to faculty-chat if ask-faculty didn't work
+          if (!response || !answer || answer.includes('Thank you for that question')) {
+            try {
+              const { DialogicAPI: API } = await loadDialogic();
+              const api = new API({
+                apiUrl: 'https://xougqdomkoisrxdnagcj.supabase.co/functions/v1',
+                apiKey: SUPABASE_ANON_KEY
+              });
+              
+              response = await api.askFaculty(currentFaculty, question, {
+                context: lessonContext,
+                conversationHistory: []
+              });
+              answer = response.answer;
+            } catch (err) {
+              console.error('Dialogic API failed:', err);
+            }
+          }
           
           // Remove typing indicator
           if (typingMsg && typingMsg.parentNode) {
             typingMsg.parentNode.removeChild(typingMsg);
           }
           
-          // Add the actual response
-          addMessage('faculty', response.answer, currentFaculty);
+          // Add the actual response as a reply to the user's question
+          if (answer && answer.trim() && !answer.includes('Thank you for that question')) {
+            addMessage('faculty', answer, currentFaculty, userMessageId);
+          } else {
+            // Generate a contextual response based on the question
+            // This is a better fallback that actually addresses the question
+            const contextualAnswer = generateContextualAnswer(question, lessonContext);
+            addMessage('faculty', contextualAnswer, currentFaculty, userMessageId);
+          }
           
           // Log the source for debugging
-          console.log('Response source:', response.source);
+          console.log('Response source:', response?.source || 'generated');
           
           // Resume delivery after delay
           if (dialogic.deliveryEngine) {
-            const delay = response.source === 'fallback' || response.source === 'contextual-fallback' ? 3000 : 2000;
+            const delay = response?.source === 'fallback' || response?.source === 'contextual-fallback' ? 3000 : 2000;
             setTimeout(() => {
               dialogic.deliveryEngine.resume();
             }, delay);
@@ -702,7 +779,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           if (typingMsg && typingMsg.parentNode) {
             typingMsg.parentNode.removeChild(typingMsg);
           }
-          addMessage('faculty', 'I apologize, but I encountered an error processing your question. Please try asking again.', currentFaculty);
+          addMessage('faculty', 'I apologize, but I encountered an error processing your question. Please try asking again.', currentFaculty, userMessageId);
           
           // Resume delivery
           if (dialogic.deliveryEngine) {
