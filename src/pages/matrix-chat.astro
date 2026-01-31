@@ -384,8 +384,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     let replyingToMessageId = null;
 
     // Add message to chat
-    function addMessage(type, text, sender = null, replyToId = null) {
-      const messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    function addMessage(type, text, sender = null, replyToId = null, messageId = null) {
+      // Use provided messageId or generate one
+      if (!messageId) {
+        messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      }
       const messageDiv = document.createElement('div');
       messageDiv.className = `flex gap-3 ${type === 'user' ? 'flex-row-reverse' : ''} message-item group`;
       messageDiv.dataset.messageId = messageId;
@@ -665,11 +668,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const question = chatInput.value.trim();
       if (question && dialogic && currentFaculty) {
         const userMessageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        const userMsg = addMessage('user', question, null, replyingToMessageId);
-        userMsg.dataset.messageId = userMessageId;
+        // Add user message with reply indicator if needed
+        addMessage('user', question, null, replyingToMessageId, userMessageId);
         
         chatInput.value = '';
-        const replyToId = replyingToMessageId; // Save before clearing
         clearReply();
         chatInput.disabled = true;
         sendBtn.disabled = true;
