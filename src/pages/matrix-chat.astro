@@ -269,24 +269,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         if (response.ok) {
           const faculty = await response.json();
-          facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
-          faculty.forEach(f => {
-            const name = `${f.given_name || ''} ${f.surname || ''}`.trim() || f.id;
-            const option = document.createElement('option');
-            option.value = f.id;
-            option.textContent = name;
-            option.dataset.discipline = f.fields?.join(', ') || '';
-            // Cache portrait URL if available
-            if (f.portrait_url) {
-              portraitCache.set(f.id, f.portrait_url);
-            }
-            facultySelect.appendChild(option);
-          });
-        } else {
-          throw new Error('Failed to fetch faculty');
+          if (faculty && faculty.length > 0) {
+            facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
+            faculty.forEach(f => {
+              const name = `${f.given_name || ''} ${f.surname || ''}`.trim() || f.id;
+              const option = document.createElement('option');
+              option.value = f.id;
+              option.textContent = `${name}${f.fields && f.fields.length > 0 ? ` (${f.fields.join(', ')})` : ''}`;
+              option.dataset.discipline = f.fields?.join(', ') || '';
+              // Cache portrait URL if available
+              if (f.portrait_url) {
+                portraitCache.set(f.id, f.portrait_url);
+              }
+              facultySelect.appendChild(option);
+            });
+            return; // Success, exit early
+          }
         }
       } catch (error) {
-        console.error('Failed to load faculty:', error);
+        // Silently fail and use fallback - network errors are expected in some environments
+        if (!error.message?.includes('Failed to fetch') && !error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+          console.warn('Failed to load faculty from Supabase (using fallback):', error);
+        }
+      }
+      
+      // Fallback to hardcoded list (always available)
         // Fallback - comprehensive faculty list for Khan Academy content
         const sampleFaculty = [
           // Mathematics
