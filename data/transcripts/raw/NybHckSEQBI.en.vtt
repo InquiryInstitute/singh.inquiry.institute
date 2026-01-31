@@ -1,0 +1,623 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:06.740 --> 00:00:09.400
+Hi! This is Rob. Welcome to Math Antics.
+
+00:00:09.409 --> 00:00:12.310
+In this lesson, we're going to learn some really important things
+
+00:00:12.310 --> 00:00:15.728
+about a whole branch of math called Algebra.
+
+00:00:15.728 --> 00:00:19.808
+The first thing you need to know is that Algebra is a lot like arithmetic.
+
+00:00:19.808 --> 00:00:22.008
+It follows all the rules of arithmetic
+
+00:00:22.008 --> 00:00:26.560
+and it uses the same four main operations that arithmetic is built on:
+
+00:00:26.565 --> 00:00:30.582
+addition, subtraction, multiplication and division.
+
+00:00:30.582 --> 00:00:33.135
+But Algebra introduces a new element...
+
+00:00:33.135 --> 00:00:35.755
+the element of the unknown.
+
+00:00:35.760 --> 00:00:37.552
+When you were learning arithmetic,
+
+00:00:37.552 --> 00:00:41.537
+the only thing that was ever unknown was the answer to the problem.
+
+00:00:41.537 --> 00:00:46.205
+For example, you might have the problem 1 + 2 = what?
+
+00:00:46.205 --> 00:00:50.106
+The answer isn't known until you go ahead and do the arithmetic.
+
+00:00:50.106 --> 00:00:54.641
+Now the important thing about Algebra is that when we don't know what a number is yet,
+
+00:00:54.641 --> 00:00:56.792
+we use a symbol in its place.
+
+00:00:56.792 --> 00:00:59.910
+that symbol is usually just any letter of the alphabet.
+
+00:00:59.910 --> 00:01:03.470
+A really popular letter to choose is the letter 'x'.
+
+00:01:03.470 --> 00:01:09.296
+So in arithmetic, we would just leave the problem like this: 1 + 2 = "blank"
+
+00:01:09.296 --> 00:01:12.331
+and we'd write in the answer when we did the addition.
+
+00:01:12.331 --> 00:01:17.650
+But in Algebra, we'd write it like this:  1 + 2 = x
+
+00:01:17.650 --> 00:01:21.951
+The 'x' is a place holder that stands for the number that we don't know yet.
+
+00:01:21.951 --> 00:01:26.319
+What we have here is a very basic algebraic equation.
+
+00:01:26.319 --> 00:01:31.020
+An equation is just a mathematical statement that two things are equal.
+
+00:01:31.020 --> 00:01:34.140
+An equation says, "the things on this side of the equal sign
+
+00:01:34.140 --> 00:01:37.940
+have the same value as the things on the other side of the equal sign."
+
+00:01:37.940 --> 00:01:43.442
+In this case, our equation is telling us that the known values on this side (1+2)
+
+00:01:43.442 --> 00:01:45.361
+are equal to what's on the other side,
+
+00:01:45.361 --> 00:01:49.181
+which happens to be the unknown value that we are calling 'x'.
+
+00:01:49.181 --> 00:01:50.941
+One of the main goals in Algebra
+
+00:01:50.941 --> 00:01:53.941
+is to figure out what the unknown values in equations are.
+
+00:01:53.941 --> 00:01:57.797
+And when you do that, it's called "solving the equations".
+
+00:01:57.797 --> 00:02:02.581
+In this equation, it's pretty easy to see that the unknown value is just 3.
+
+00:02:02.581 --> 00:02:06.817
+All you have to do is actually add the 1 and 2 together on this side of the equation
+
+00:02:06.817 --> 00:02:11.485
+and it turns into 3 = x, which is the same as x = 3.
+
+00:02:11.485 --> 00:02:14.870
+So now we know what 'x' is!  It's just 3.
+
+00:02:14.870 --> 00:02:17.120
+That almost seems too easy, doesn’t it?
+
+00:02:17.120 --> 00:02:21.320
+And that's why in Algebra, you are usually given an equation in a more complicated form
+
+00:02:21.320 --> 00:02:24.700
+like this: x - 2 = 1.
+
+00:02:24.700 --> 00:02:28.740
+This is exactly the same equation as 1 + 2 = x,
+
+00:02:28.742 --> 00:02:33.282
+but it has been rearranged so that it's not quite as easy to tell what 'x' is.
+
+00:02:33.282 --> 00:02:36.842
+So in Algebra, solving equations is a lot like a game
+
+00:02:36.842 --> 00:02:39.420
+where you are given mixed-up, complicated equations,
+
+00:02:39.429 --> 00:02:42.209
+and it's your job to simplify them and rearrange them
+
+00:02:42.209 --> 00:02:45.480
+until it is a nice simple equation (like x = 3)
+
+00:02:45.480 --> 00:02:48.640
+where it's easy to tell what the unknown values are.
+
+00:02:48.648 --> 00:02:50.332
+We're going to learn a lot more about
+
+00:02:50.332 --> 00:02:52.516
+how you actually do that (how you solve equations)
+
+00:02:52.516 --> 00:02:54.134
+in the next several videos,
+
+00:02:54.134 --> 00:02:56.684
+but for now, let's learn some important rules about
+
+00:02:56.684 --> 00:03:00.853
+how symbols can and can't be used in algebraic equations.
+
+00:03:00.853 --> 00:03:04.271
+The first rule you need to know is that the same symbol (or letter)
+
+00:03:04.271 --> 00:03:09.123
+can be used in different algebra problems to stand for different unknown values.
+
+00:03:09.123 --> 00:03:11.673
+For example, in the problem we just solved,
+
+00:03:11.673 --> 00:03:14.841
+the letter 'x' was used to stand for the number 3, right?
+
+00:03:14.841 --> 00:03:18.042
+But 'x' could stand for a different number in a different problem.
+
+00:03:18.042 --> 00:03:22.610
+Like, if someone asks us to solve the equation, 5 + x = 10.
+
+00:03:22.610 --> 00:03:25.470
+In order for the two sides of this equation to be equal,
+
+00:03:25.470 --> 00:03:31.280
+'x' must have the value '5' in this problem, because 5 + 5 = 10.
+
+00:03:31.280 --> 00:03:36.098
+So 'x' (or any other symbol) can stand for different values in different problems.
+
+00:03:36.098 --> 00:03:37.299
+That's okay,
+
+00:03:37.299 --> 00:03:39.367
+but what's NOT okay is for a symbol
+
+00:03:39.367 --> 00:03:43.547
+to stand for different values in the same problem at the same time!
+
+00:03:43.547 --> 00:03:48.500
+For example, what if you had the equation: x + x = 10?
+
+00:03:48.503 --> 00:03:52.420
+This equation says that if we add 'x' to 'x' we will get 10.
+
+00:03:52.420 --> 00:03:57.806
+And there are a lot of different numbers we could add together to get 10, like 6 and 4.
+
+00:03:57.806 --> 00:04:02.524
+But, if we had the first 'x' stand for 6 and the second 'x' stand for 4,
+
+00:04:02.524 --> 00:04:05.924
+then 'x' would stand for two different value at the same time
+
+00:04:05.924 --> 00:04:08.764
+and things could get really confusing!
+
+00:04:08.764 --> 00:04:12.244
+If you wanted symbols to stand for two different numbers at the same time,
+
+00:04:12.244 --> 00:04:16.420
+you would need to use two different symbols, like 'x' and 'y'.
+
+00:04:16.429 --> 00:04:21.231
+So in Algebra, whenever you see the same symbol repeated more than once in an equation,
+
+00:04:21.231 --> 00:04:24.415
+it's representing the same unknown value.
+
+00:04:24.415 --> 00:04:28.500
+Like if you see a really complicated Algebraic equation (like this),
+
+00:04:28.500 --> 00:04:31.752
+where 'x' is repeated a lot of different times,
+
+00:04:31.752 --> 00:04:34.969
+all of those 'x's stand for the same value,
+
+00:04:34.969 --> 00:04:38.249
+and it will be your job to figure out what that value is.
+
+00:04:38.249 --> 00:04:41.238
+Okay, so for any particular equation,
+
+00:04:41.238 --> 00:04:46.023
+we can't use the same letter to represent two different numbers at the same time,
+
+00:04:46.023 --> 00:04:47.689
+but what about the other way around?
+
+00:04:47.689 --> 00:04:51.225
+Could we use two different letters to represent the same number?
+
+00:04:51.225 --> 00:04:54.176
+Yes! - Here's an example of that.
+
+00:04:54.176 --> 00:04:58.036
+Let's say you have the equation: a + b = 2
+
+00:04:58.040 --> 00:05:02.040
+What could 'a' and 'b' stand for so that the equation is true?
+
+00:05:02.045 --> 00:05:07.345
+Well, If 'a' was 0 and 'b' was 2, then the equation would be true.
+
+00:05:07.345 --> 00:05:09.085
+Or, we could switch them around.
+
+00:05:09.085 --> 00:05:13.425
+If 'a' was 2 and 'b' was 0, the equation would also be true.
+
+00:05:13.425 --> 00:05:15.085
+But there's another possibility:
+
+00:05:15.085 --> 00:05:20.340
+If 'a' was 1 and 'b' was also 1, that would make the equation true, right?
+
+00:05:20.351 --> 00:05:23.353
+So, even though 'a' and 'b' are different symbols,
+
+00:05:23.353 --> 00:05:26.404
+and would usually be used to represent different numbers,
+
+00:05:26.404 --> 00:05:30.222
+there are times when they might happen to represent the same number.
+
+00:05:30.222 --> 00:05:33.273
+Oh, and this problem can help us understand something
+
+00:05:33.273 --> 00:05:36.724
+very important about how symbols are used in Algebra.
+
+00:05:36.724 --> 00:05:40.776
+Did you notice that there were different possible solution for this equation?
+
+00:05:40.776 --> 00:05:47.327
+In other words, 'b' could have the value 0, 1, or 2 depending on what the value of 'a' was.
+
+00:05:47.327 --> 00:05:50.413
+If 'a' is 0 then 'b' must be 2
+
+00:05:50.413 --> 00:05:53.297
+If 'a' is 1 then 'b' must be 1
+
+00:05:53.297 --> 00:05:56.515
+If 'a' is 2 then 'b' must be 0
+
+00:05:56.515 --> 00:05:59.349
+'b' can't have two different values at the same time,
+
+00:05:59.349 --> 00:06:03.268
+but it's value can change over time if the value of 'a' changes.
+
+00:06:03.268 --> 00:06:08.702
+In Algebra, 'b' is what's called a "variable" because it's value can 'vary' or change.
+
+00:06:08.702 --> 00:06:11.982
+In fact, in this equation, both 'a' and 'b' are variables
+
+00:06:11.982 --> 00:06:16.056
+because their values will change depending on the value of each other.
+
+00:06:16.056 --> 00:06:20.723
+Actually, it's really common in Algebra to refer to any letter as a variable,
+
+00:06:20.723 --> 00:06:24.308
+since letters can stand for different values in different problems.
+
+00:06:24.308 --> 00:06:27.508
+But at Math Antics, we'll usually just use the word "variable"
+
+00:06:27.508 --> 00:06:32.228
+when we're talking about values that can change or vary in the same problem.
+
+00:06:32.228 --> 00:06:36.392
+Alright, so far we've learned that Algebra is a lot like arithmetic,
+
+00:06:36.392 --> 00:06:41.892
+but that in includes unknown values and variables that we can solve for in equations.
+
+00:06:41.892 --> 00:06:45.260
+There's one other really important thing that I want to teach you
+
+00:06:45.260 --> 00:06:49.413
+that will help you understand what's going on in a lot of Algebra problems,
+
+00:06:49.413 --> 00:06:52.313
+and it has to do with multiplication.
+
+00:06:52.320 --> 00:06:55.180
+Here are the four basic arithmetic operations:
+
+00:06:55.181 --> 00:06:58.765
+addition, subtraction, multiplication and division.
+
+00:06:58.765 --> 00:07:03.733
+Although in Algebra, you'll usually see division written in fraction form, like this.
+
+00:07:03.733 --> 00:07:07.217
+In Arithmetic, all four operations have the same status,
+
+00:07:07.217 --> 00:07:11.736
+but in Algebra, multiplication get's some special treatment.
+
+00:07:11.736 --> 00:07:15.721
+In Algebra, multiplication is the 'default' operation.
+
+00:07:15.721 --> 00:07:20.422
+That means, if no other arithmetic operation is shown between two symbols,
+
+00:07:20.422 --> 00:07:26.008
+then you can just assume they're being multiplied. The multiplication is 'implied'.
+
+00:07:26.008 --> 00:07:29.210
+For example, instead of writing 'a' times 'b',
+
+00:07:29.210 --> 00:07:32.543
+you can leave out the times symbol and just write 'ab'.
+
+00:07:32.543 --> 00:07:35.644
+Since no operation is shown between these two symbols,
+
+00:07:35.644 --> 00:07:38.896
+you know that you're supposed to multiply 'a' and 'b'.
+
+00:07:38.896 --> 00:07:41.331
+Of course, you can't actually multiply 'a' and 'b'
+
+00:07:41.331 --> 00:07:44.030
+until you figure out what numbers they stand for.
+
+00:07:44.030 --> 00:07:47.065
+The advantage of this rule about multiplication is that
+
+00:07:47.065 --> 00:07:51.884
+it makes many algebraic equations less cluttered and easier to write down.
+
+00:07:51.884 --> 00:07:57.752
+For example, instead of this: a * b + c * d = 10
+
+00:07:57.760 --> 00:08:02.160
+You could just write: ab + cd = 10.
+
+00:08:02.160 --> 00:08:04.540
+You can also use this shorthand when you are multiplying
+
+00:08:04.540 --> 00:08:10.480
+a variable and a known number... like 2x, which means the same thing as 2 times 'x'
+
+00:08:10.491 --> 00:08:14.892
+or 3y which means the same thing as 3 times 'y'
+
+00:08:14.892 --> 00:08:17.809
+Since the symbol and the number are right next to each other,
+
+00:08:17.809 --> 00:08:19.760
+the multiplication is implied.
+
+00:08:19.760 --> 00:08:21.578
+You don't have to write it down.
+
+00:08:21.578 --> 00:08:23.378
+Finally some good news!
+
+00:08:23.380 --> 00:08:27.020
+Now I never have to write down that pesky multiplication symbol again!
+
+00:08:27.020 --> 00:08:28.320
+Oh yeah!!
+
+00:08:28.330 --> 00:08:30.448
+Ah, not so fast...
+
+00:08:30.448 --> 00:08:35.083
+there are some cases in Algebra where still need to use a multiplication symbol.
+
+00:08:35.083 --> 00:08:38.700
+For example, what if you want to show 2 x 5?
+
+00:08:38.700 --> 00:08:42.869
+If you just get rid of the times symbol and put the '2' right next to the '5',
+
+00:08:42.869 --> 00:08:45.419
+it's going to look like the two-digit number twenty-five,
+
+00:08:45.419 --> 00:08:48.336
+which is NOT the same as 2 x 5.
+
+00:08:48.336 --> 00:08:52.622
+So, whenever you need to show multiplication between two known numbers,
+
+00:08:52.622 --> 00:08:55.262
+you still have to use the times symbol, unless...
+
+00:08:55.262 --> 00:08:57.002
+you use parentheses instead.
+
+00:08:57.800 --> 00:09:00.880
+But aren't parentheses used to show grouping in math?
+
+00:09:00.880 --> 00:09:03.540
+How can you use that to show multiplication?
+
+00:09:03.543 --> 00:09:05.793
+Ah, that's a good question.
+
+00:09:05.793 --> 00:09:07.993
+Parentheses are used to group things,
+
+00:09:08.000 --> 00:09:10.820
+but whenever you put two groups right next to each other,
+
+00:09:10.828 --> 00:09:12.678
+with no operation between them,
+
+00:09:12.678 --> 00:09:14.538
+guess what operation is implied.
+
+00:09:14.540 --> 00:09:17.220
+Yep!  Multiplication!
+
+00:09:17.220 --> 00:09:19.280
+For example, if you see the this,
+
+00:09:19.282 --> 00:09:24.233
+it means that the group (a+b) is being multiplied by the group (x+y).
+
+00:09:24.233 --> 00:09:27.734
+We could put a times symbol between the groups, but we don't have to
+
+00:09:27.734 --> 00:09:30.336
+because it's the default operation in Algebra.
+
+00:09:30.336 --> 00:09:32.986
+The multiplication is just implied.
+
+00:09:32.986 --> 00:09:36.437
+So, going back to our problem: 2 x 5
+
+00:09:36.437 --> 00:09:40.873
+If you wanted to, you could put each of the numbers inside parentheses like this,
+
+00:09:40.873 --> 00:09:43.790
+and then you could get rid of the multiplication sign.
+
+00:09:43.790 --> 00:09:46.691
+Now this can't be confused with the number twenty-five,
+
+00:09:46.691 --> 00:09:48.908
+and since the groups are right next to each other,
+
+00:09:48.908 --> 00:09:51.460
+you know that you need to multiply them.
+
+00:09:51.460 --> 00:09:56.244
+Of course, it might seem strange to have just one thing inside 'group' symbols like this,
+
+00:09:56.244 --> 00:09:58.462
+but it's okay to do that in math.
+
+00:09:58.462 --> 00:10:00.879
+An alternate way that you could do the same thing would be
+
+00:10:00.879 --> 00:10:04.248
+to put just one of the numbers in parentheses, like this.
+
+00:10:04.248 --> 00:10:07.031
+Again, you won't confuse this with a two-digit number
+
+00:10:07.031 --> 00:10:10.117
+and you know that multiplication is implied.
+
+00:10:10.117 --> 00:10:13.967
+Okay, so we've learned that Algebra is a lot like arithmetic,
+
+00:10:13.967 --> 00:10:18.169
+but it involves unknown values or variables that we need to solve for.
+
+00:10:18.169 --> 00:10:22.387
+And we learned that in Algebra, the multiplication sign is usually not shown,
+
+00:10:22.387 --> 00:10:24.622
+because it's the default operation.
+
+00:10:24.622 --> 00:10:29.280
+You can just assume that two things right next to each other are being multiplied.
+
+00:10:29.280 --> 00:10:31.659
+But why do we even care about Algebra?
+
+00:10:31.659 --> 00:10:33.708
+Is it good for anything in the 'real world'?
+
+00:10:33.708 --> 00:10:38.228
+or is it just a bunch of tricky problems that keep students busy in school?
+
+00:10:38.228 --> 00:10:43.811
+Actually, Algebra is very useful for describing or "modeling"  things in the real world.
+
+00:10:43.811 --> 00:10:45.812
+It's a little hard to see that when you are just looking
+
+00:10:45.812 --> 00:10:49.380
+at all these numbers and symbols on the page of a math book.
+
+00:10:49.380 --> 00:10:51.114
+But, it's a lot easier to see
+
+00:10:51.114 --> 00:10:55.954
+when you start taking algebraic equations and graphing their solutions.
+
+00:10:55.960 --> 00:10:59.200
+Graphing an equation is like using its different solutions
+
+00:10:59.201 --> 00:11:05.119
+to draw simple lines and curves that can be used to describe and predict things in real life.
+
+00:11:05.119 --> 00:11:08.470
+For example, there's a whole class of equations in Algebra
+
+00:11:08.470 --> 00:11:12.838
+called "linear" equations because they form straight lines when you graph them.
+
+00:11:12.838 --> 00:11:16.698
+Those sorts of equations could help you describe the slope of a roof
+
+00:11:16.700 --> 00:11:19.960
+or tell you how long it will take to get somewhere.
+
+00:11:19.960 --> 00:11:24.020
+Another class of algebraic equations, called "quadratic" equations
+
+00:11:24.025 --> 00:11:26.326
+can be used to design telescope lenses,
+
+00:11:26.326 --> 00:11:29.428
+or describe how a ball flies through the air,
+
+00:11:29.428 --> 00:11:32.378
+or predict the growth of a population.
+
+00:11:32.378 --> 00:11:34.998
+So Algebra is used all the time in fields like
+
+00:11:35.000 --> 00:11:39.160
+science, engineering, economics and computer programming.
+
+00:11:39.164 --> 00:11:43.583
+And even though you might not need Algebra to get by in your day to day life,...
+
+00:11:43.583 --> 00:11:48.303
+...so divide both sides by 3. That means x = 42.
+
+00:11:48.303 --> 00:11:52.243
+So... in three... two... one...
+
+00:11:52.243 --> 00:11:53.280
+YES!!
+
+00:11:53.280 --> 00:11:55.460
+Alright... now to see how much butter I need.
+
+00:11:56.120 --> 00:11:58.680
+It's still a very useful part of math.
+
+00:11:58.680 --> 00:12:01.820
+Thanks for watching Math Antics, 
+and I'll see ya next time!
+
+00:12:02.620 --> 00:12:05.620
+Learn more at www.mathantics.com
+
