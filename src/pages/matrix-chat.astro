@@ -78,10 +78,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div id="chatMessages" class="flex-1 overflow-y-auto p-6 space-y-4">
-          <div class="flex gap-3">
-            <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-semibold flex-shrink-0">
-              S
-            </div>
+          <div class="flex gap-3" data-message-id="welcome">
+            <img 
+              src="https://inquiry.institute/inquisitors/portraits/a-plato.jpg" 
+              alt="Singh" 
+              class="w-10 h-10 rounded-lg object-cover border-2 border-amber-500 flex-shrink-0"
+              onerror="this.src='https://inquiry.institute/inquisitors/portraits/a-plato.jpg'"
+            />
             <div class="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%]">
               <div class="flex justify-between items-center mb-1">
                 <span class="text-sm font-semibold">Singh</span>
@@ -94,21 +97,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
         </div>
 
-        <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex gap-3">
-          <textarea 
-            id="chatInput" 
-            class="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 resize-none"
-            placeholder="Ask a question or type a message..."
-            rows="2"
-            disabled
-          ></textarea>
-          <button 
-            id="sendBtn" 
-            class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
-            disabled
-          >
-            Send
-          </button>
+        <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700">
+          <!-- Reply indicator -->
+          <div id="replyIndicator" class="hidden mb-2 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex justify-between items-center">
+            <div class="text-sm text-slate-700 dark:text-slate-300">
+              <span class="font-semibold">↩ Replying to:</span>
+              <span id="replyText" class="ml-2"></span>
+            </div>
+            <button 
+              id="cancelReply" 
+              class="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+              onclick="clearReply()"
+            >
+              Cancel
+            </button>
+          </div>
+          
+          <div class="flex gap-3">
+            <textarea 
+              id="chatInput" 
+              class="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 resize-none"
+              placeholder="Ask a question or type a message..."
+              rows="2"
+              disabled
+            ></textarea>
+            <button 
+              id="sendBtn" 
+              class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
+              disabled
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -359,15 +379,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     }
 
+    // Message reactions storage
+    const messageReactions = new Map(); // messageId -> { emoji: count }
+    let replyingToMessageId = null;
+
     // Add message to chat
-    function addMessage(type, text, sender = null) {
+    function addMessage(type, text, sender = null, replyToId = null) {
+      const messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const messageDiv = document.createElement('div');
-      messageDiv.className = `flex gap-3 ${type === 'user' ? 'flex-row-reverse' : ''}`;
+      messageDiv.className = `flex gap-3 ${type === 'user' ? 'flex-row-reverse' : ''} message-item group`;
+      messageDiv.dataset.messageId = messageId;
+      messageDiv.dataset.type = type;
       
-      // Use portrait for faculty, avatar for user
-      const avatar = document.createElement(type === 'faculty' ? 'img' : 'div');
+      // Use portrait/bust for faculty, always use image
+      const avatar = document.createElement('img');
       if (type === 'faculty' && sender) {
-        avatar.className = 'w-10 h-10 rounded-full object-cover border-2 border-amber-500 flex-shrink-0';
+        avatar.className = 'w-10 h-10 rounded-lg object-cover border-2 border-amber-500 flex-shrink-0';
         // Get portrait URL (async, but we'll set it)
         getPortraitUrl(sender).then(url => {
           avatar.src = url;
@@ -377,22 +404,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         });
         avatar.alt = `${sender} portrait`;
         avatar.onerror = function() {
-          // Fallback to initial-based avatar if image fails
-          this.style.display = 'none';
-          const fallback = document.createElement('div');
-          fallback.className = 'w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-semibold flex-shrink-0';
-          fallback.textContent = sender.charAt(0).toUpperCase();
-          this.parentNode.insertBefore(fallback, this);
+          // Always use portrait, even if it fails - just use default
+          this.src = 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
         };
       } else {
-        avatar.className = `w-10 h-10 rounded-full flex items-center justify-center font-semibold flex-shrink-0 bg-slate-500 text-white`;
-        avatar.textContent = 'U';
+        // User avatar - use a default portrait
+        avatar.className = 'w-10 h-10 rounded-lg object-cover border-2 border-slate-500 flex-shrink-0';
+        avatar.src = 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
+        avatar.alt = 'You';
       }
       
       const content = document.createElement('div');
-      content.className = `flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%] ${
+      content.className = `flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 max-w-[80%] relative ${
         type === 'user' ? 'bg-amber-50 dark:bg-amber-900/20' : ''
       }`;
+      
+      // Reply indicator if replying to a message
+      if (replyToId) {
+        const replyIndicator = document.createElement('div');
+        replyIndicator.className = 'text-xs text-slate-500 mb-2 pb-2 border-b border-slate-200 dark:border-slate-700';
+        const replyToMsg = document.querySelector(`[data-message-id="${replyToId}"]`);
+        if (replyToMsg) {
+          const replyText = replyToMsg.querySelector('.message-text')?.textContent || '';
+          replyIndicator.textContent = `↩ Replying to: ${replyText.substring(0, 50)}${replyText.length > 50 ? '...' : ''}`;
+        }
+        content.appendChild(replyIndicator);
+      }
       
       const header = document.createElement('div');
       header.className = 'flex justify-between items-center mb-1';
@@ -409,11 +446,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       header.appendChild(timeSpan);
       
       const textDiv = document.createElement('div');
-      textDiv.className = 'text-slate-900 dark:text-slate-100';
+      textDiv.className = 'text-slate-900 dark:text-slate-100 message-text';
       textDiv.textContent = text;
       
       content.appendChild(header);
       content.appendChild(textDiv);
+      
+      // Emoji reactions bar
+      const reactionsBar = document.createElement('div');
+      reactionsBar.className = 'flex flex-wrap gap-1 mt-2 pt-2 border-t border-slate-200 dark:border-slate-700';
+      reactionsBar.id = `reactions-${messageId}`;
+      
+      // Quick reaction buttons
+      const quickReactions = document.createElement('div');
+      quickReactions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity';
+      const reactionEmojis = ['💡', '🤔', '👍', '❤️', '🎯', '❓'];
+      reactionEmojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'px-2 py-1 text-sm hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors';
+        btn.textContent = emoji;
+        btn.title = `React with ${emoji}`;
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          toggleReaction(messageId, emoji);
+        };
+        quickReactions.appendChild(btn);
+      });
+      
+      // Reply button
+      const replyBtn = document.createElement('button');
+      replyBtn.className = 'px-2 py-1 text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity';
+      replyBtn.textContent = '↩ Reply';
+      replyBtn.onclick = (e) => {
+        e.stopPropagation();
+        setReplyingTo(messageId);
+      };
+      quickReactions.appendChild(replyBtn);
+      
+      reactionsBar.appendChild(quickReactions);
+      content.appendChild(reactionsBar);
       
       messageDiv.appendChild(avatar);
       messageDiv.appendChild(content);
@@ -423,6 +494,88 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       
       return messageDiv; // Return for potential removal
     }
+
+    // Toggle emoji reaction
+    function toggleReaction(messageId, emoji) {
+      if (!messageReactions.has(messageId)) {
+        messageReactions.set(messageId, new Map());
+      }
+      const reactions = messageReactions.get(messageId);
+      
+      if (reactions.has(emoji)) {
+        reactions.delete(emoji);
+      } else {
+        reactions.set(emoji, 1);
+      }
+      
+      updateReactionsDisplay(messageId);
+    }
+
+    // Update reactions display
+    function updateReactionsDisplay(messageId) {
+      const reactionsBar = document.getElementById(`reactions-${messageId}`);
+      if (!reactionsBar) return;
+      
+      const reactions = messageReactions.get(messageId) || new Map();
+      const existingReactions = reactionsBar.querySelector('.reaction-badges');
+      
+      if (existingReactions) {
+        existingReactions.remove();
+      }
+      
+      if (reactions.size > 0) {
+        const badges = document.createElement('div');
+        badges.className = 'flex flex-wrap gap-1 reaction-badges';
+        
+        reactions.forEach((count, emoji) => {
+          const badge = document.createElement('button');
+          badge.className = 'px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors';
+          badge.textContent = `${emoji} ${count}`;
+          badge.onclick = (e) => {
+            e.stopPropagation();
+            toggleReaction(messageId, emoji);
+          };
+          badges.appendChild(badge);
+        });
+        
+        reactionsBar.insertBefore(badges, reactionsBar.firstChild);
+      }
+    }
+
+    // Set replying to message
+    function setReplyingTo(messageId) {
+      replyingToMessageId = messageId;
+      const replyToMsg = document.querySelector(`[data-message-id="${messageId}"]`);
+      const replyIndicator = document.getElementById('replyIndicator');
+      const replyText = document.getElementById('replyText');
+      
+      if (replyToMsg && replyIndicator && replyText) {
+        replyToMsg.classList.add('ring-2', 'ring-amber-500');
+        const msgText = replyToMsg.querySelector('.message-text')?.textContent || '';
+        replyText.textContent = msgText.substring(0, 60) + (msgText.length > 60 ? '...' : '');
+        replyIndicator.classList.remove('hidden');
+        chatInput.focus();
+      }
+    }
+
+    // Clear reply
+    function clearReply() {
+      if (replyingToMessageId) {
+        const replyToMsg = document.querySelector(`[data-message-id="${replyingToMessageId}"]`);
+        if (replyToMsg) {
+          replyToMsg.classList.remove('ring-2', 'ring-amber-500');
+        }
+      }
+      replyingToMessageId = null;
+      const replyIndicator = document.getElementById('replyIndicator');
+      if (replyIndicator) {
+        replyIndicator.classList.add('hidden');
+      }
+      chatInput.placeholder = 'Ask a question or type a message...';
+    }
+
+    // Make clearReply available globally for onclick
+    window.clearReply = clearReply;
 
     // Start delivery
     async function startDelivery() {
@@ -490,8 +643,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     sendBtn.addEventListener('click', async () => {
       const question = chatInput.value.trim();
       if (question && dialogic && currentFaculty) {
-        addMessage('user', question);
+        addMessage('user', question, null, replyingToMessageId);
+        const questionWithReply = replyingToMessageId 
+          ? `[Replying to previous message] ${question}`
+          : question;
         chatInput.value = '';
+        clearReply();
         chatInput.disabled = true;
         sendBtn.disabled = true;
         
@@ -516,7 +673,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             apiKey: SUPABASE_ANON_KEY
           });
           
-          const response = await api.askFaculty(currentFaculty, question, {
+          const response = await api.askFaculty(currentFaculty, questionWithReply, {
             context: lessonContext,
             conversationHistory: []
           });
