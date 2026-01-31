@@ -883,15 +883,11 @@
                     console.error('Function error:', error);
                     // If error has context, try to extract the actual error message
                     if (error.context && error.context.body) {
-                        try {
-                            const errorBody = typeof error.context.body === 'string' 
-                                ? JSON.parse(error.context.body) 
-                                : error.context.body;
-                            if (errorBody && errorBody.error) {
-                                throw new Error(errorBody.error);
-                            }
-                        } catch (parseErr) {
-                            // Ignore JSON parse errors and fall back to generic message handling below
+                        const errorBody = typeof error.context.body === 'string' 
+                            ? JSON.parse(error.context.body) 
+                            : error.context.body;
+                        if (errorBody.error) {
+                            throw new Error(errorBody.error);
                         }
                     }
                     // Check if it's a non-2xx status code error
@@ -914,19 +910,22 @@
                     throw new Error('No audio data returned from function');
                 }
 
-                // Convert base64 to Blob (what callers expect)
-                const binaryString = atob(data.audio_base64);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                return new Blob([bytes], { type: data.audio_format || 'audio/mpeg' });
+                return data;
             } catch (err) {
                 // Re-throw with better error message
                 if (err.message) {
                     throw err;
                 }
                 throw new Error(`Failed to generate audio: ${err}`);
+            }
+
+                // Convert base64 to blob
+                const binaryString = atob(data.audio_base64);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return new Blob([bytes], { type: data.audio_format || 'audio/mpeg' });
             }
         }
 
