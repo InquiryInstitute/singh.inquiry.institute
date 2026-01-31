@@ -152,26 +152,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const facultyPortraitName = document.getElementById('facultyPortraitName');
     const facultyPortraitDiscipline = document.getElementById('facultyPortraitDiscipline');
 
-    // Get portrait URL for faculty slug
-    function getPortraitUrl(slug) {
+    // Cache for faculty portraits from Supabase
+    const portraitCache = new Map();
+
+    // Get portrait URL for faculty slug from Supabase
+    async function getPortraitUrl(slug) {
       if (!slug) return 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
       
-      // Convert slug format: a.gauss -> a-gauss
+      // Check cache first
+      if (portraitCache.has(slug)) {
+        const cached = portraitCache.get(slug);
+        return cached || 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
+      }
+
+      try {
+        // Fetch from Supabase
+        const response = await fetch(
+          `https://xougqdomkoisrxdnagcj.supabase.co/rest/v1/faculty?select=id,portrait_url&id=eq.${encodeURIComponent(slug)}&limit=1`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0 && data[0].portrait_url) {
+            const portraitUrl = data[0].portrait_url;
+            portraitCache.set(slug, portraitUrl);
+            return portraitUrl;
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to fetch portrait from Supabase:', error);
+      }
+
+      // Fallback: try GCS
       const portraitSlug = slug.startsWith('a.') 
         ? slug.replace(/^a\./, 'a-').replace(/\./g, '-')
         : slug.startsWith('a-')
         ? slug
         : `a-${slug.replace(/\./g, '-')}`;
       
-      // Try GCS first (higher quality)
-      return `https://storage.googleapis.com/afaculty/portraits/${portraitSlug}.jpg`;
+      const fallbackUrl = `https://storage.googleapis.com/afaculty/portraits/${portraitSlug}.jpg`;
+      portraitCache.set(slug, fallbackUrl);
+      return fallbackUrl;
     }
 
     // Update faculty portrait display
-    function updateFacultyPortrait(facultyId, facultyName, discipline) {
+    async function updateFacultyPortrait(facultyId, facultyName, discipline) {
       if (!facultyId || !facultyPortrait) return;
       
-      const portraitUrl = getPortraitUrl(facultyId);
+      const portraitUrl = await getPortraitUrl(facultyId);
       
       if (facultyPortraitImg) {
         facultyPortraitImg.src = portraitUrl;
@@ -198,15 +232,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
 
       try {
-        const faculty = await api.getFaculty();
-        facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
-        faculty.forEach(f => {
-          const option = document.createElement('option');
-          option.value = f.id;
-          option.textContent = f.name;
-          option.dataset.discipline = f.fields?.join(', ') || '';
-          facultySelect.appendChild(option);
-        });
+        // Fetch faculty with portrait URLs from Supabase
+        const response = await fetch(
+          'https://xougqdomkoisrxdnagcj.supabase.co/rest/v1/faculty?select=id,surname,given_name,fields,portrait_url&active=eq.true&limit=50',
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+
+        if (response.ok) {
+          const faculty = await response.json();
+          facultySelect.innerHTML = '<option value="">-- Select a.Faculty --</option>';
+          faculty.forEach(f => {
+            const name = `${f.given_name || ''} ${f.surname || ''}`.trim() || f.id;
+            const option = document.createElement('option');
+            option.value = f.id;
+            option.textContent = name;
+            option.dataset.discipline = f.fields?.join(', ') || '';
+            // Cache portrait URL if available
+            if (f.portrait_url) {
+              portraitCache.set(f.id, f.portrait_url);
+            }
+            facultySelect.appendChild(option);
+          });
+        } else {
+          throw new Error('Failed to fetch faculty');
+        }
       } catch (error) {
         console.error('Failed to load faculty:', error);
         // Fallback - comprehensive faculty list for Khan Academy content
@@ -262,13 +316,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
 
     // Handle faculty selection change
-    facultySelect.addEventListener('change', (e) => {
+    facultySelect.addEventListener('change', async (e) => {
       const selectedOption = e.target.options[e.target.selectedIndex];
       if (selectedOption.value) {
         const facultyId = selectedOption.value;
         const facultyName = selectedOption.textContent.split(' (')[0];
         const discipline = selectedOption.dataset.discipline || '';
-        updateFacultyPortrait(facultyId, facultyName, discipline);
+        await updateFacultyPortrait(facultyId, facultyName, discipline);
       } else {
         if (facultyPortrait) {
           facultyPortrait.classList.add('hidden');
@@ -314,7 +368,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const avatar = document.createElement(type === 'faculty' ? 'img' : 'div');
       if (type === 'faculty' && sender) {
         avatar.className = 'w-10 h-10 rounded-full object-cover border-2 border-amber-500 flex-shrink-0';
-        avatar.src = getPortraitUrl(sender);
+        // Get portrait URL (async, but we'll set it)
+        getPortraitUrl(sender).then(url => {
+          avatar.src = url;
+        }).catch(() => {
+          // Fallback on error
+          avatar.src = 'https://inquiry.institute/inquisitors/portraits/a-plato.jpg';
+        });
         avatar.alt = `${sender} portrait`;
         avatar.onerror = function() {
           // Fallback to initial-based avatar if image fails
