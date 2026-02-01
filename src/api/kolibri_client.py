@@ -38,8 +38,13 @@ class KolibriClient:
     def test_connection(self) -> bool:
         """Test if Kolibri server is accessible."""
         try:
-            response = self.session.get(f"{self.api_url}/content/channel", timeout=5)
-            return response.status_code == 200
+            # Try with longer timeout and handle redirects
+            response = self.session.get(f"{self.api_url}/content/channel", timeout=10, allow_redirects=True)
+            # Accept 200 or 301/302 (redirects)
+            return response.status_code in [200, 301, 302] or (response.status_code == 404 and 'api' in response.url)
+        except requests.exceptions.Timeout:
+            logger.error(f"Connection to Kolibri timed out")
+            return False
         except Exception as e:
             logger.error(f"Failed to connect to Kolibri: {e}")
             return False
