@@ -7,10 +7,11 @@
   "videos": [
     {
       "video_id": "NybHckSEQBI",
-      "title": "Introduction to variables",
+      "title": "Algebra Basics: What Is Algebra? - Math Antics",
       "youtube_id": "NybHckSEQBI",
-      "duration": 600,
-      "order": 1
+      "duration": 726,
+      "order": 1,
+      "transcript_path": "videos/NybHckSEQBI/transcript_dialogic.json"
     },
     {
       "video_id": "sample-video-2",

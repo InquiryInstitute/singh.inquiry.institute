@@ -401,9 +401,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               
               // Try different file name patterns
               const possibleNames = [
+                video.transcript_path ? video.transcript_path.split('/').pop() : null, // Use transcript_path if available
                 `${videoId}_dialogic_transcript.json`,
                 `sample-video-${video.order}_dialogic_transcript.json`,
-                video.order === 1 ? 'sample_dialogic_transcript.json' : null
+                video.order === 1 ? 'sample_dialogic_transcript.json' : null,
+                'NybHckSEQBI_dialogic_transcript.json' // Real transcript we downloaded
               ].filter(Boolean);
               
               for (const fileName of possibleNames) {
