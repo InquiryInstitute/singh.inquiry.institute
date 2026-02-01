@@ -85,8 +85,28 @@ The site is automatically deployed to GitHub Pages via GitHub Actions when chang
 - [dialogic](https://github.com/InquiryInstitute/dialogic) - JavaScript library for dialogic delivery
 - [Inquiry.Institute](https://github.com/InquiryInstitute/Inquiry.Institute) - Main platform
 
+## Kolibri Integration
+
+We use Kolibri to mirror and download Khan Academy content:
+
+```bash
+# Find your Kolibri server
+bash scripts/find-kolibri-url.sh
+
+# Discover available content
+python scripts/kolibri-discover-content.py --kolibri-url http://your-url:port
+
+# Download and process transcripts
+python scripts/kolibri-workflow.py --kolibri-url http://your-url:port --max-videos 10
+```
+
+See [Kolibri Integration Guide](./docs/KOLIBRI_USAGE.md) for details.
+
 ## Documentation
 
+- [Kolibri Integration](./docs/KOLIBRI_USAGE.md) - Using Kolibri to download Khan Academy content
+- [Finding Kolibri URL](./docs/FIND_KOLIBRI_URL.md) - How to find your Kolibri server
+- [S3 Course Storage](./docs/s3-course-storage-design.md) - S3-based course storage system
 - [Khan Academy API Documentation](./docs/KHAN_ACADEMY_API.md) - API endpoints and data structures
 - [Google Cloud Storage Setup](./docs/GCS_SETUP.md) - GCS bucket configuration and usage
 - [Transcript Status](./TRANSCRIPT_STATUS.md) - Current transcript collection status
